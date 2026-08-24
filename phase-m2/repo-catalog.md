@@ -368,7 +368,7 @@ Category: LLM gateway / cost & routing infrastructure
 Stars: ~57.2k
 Forks: ~10.9k
 Recent Activity: Very high (44k+ commits, active CI/CD)
-License: reported MIT in public knowledge, unconfirmed in this pass — verify at audit
+License: CONFIRMED at Stage -2.4 (2026-08-24) — dual: MIT for the core, with a separately-licensed `enterprise/` carve-out (not plain MIT as previously guessed). See `phase-m2/repo-audits/berriai-litellm.md` Dimension J for detail.
 Primary Language: Python + Rust core
 Maturity: Mature, production-proven at scale
 Claimed Purpose: Unified proxy/SDK for 100+ LLM providers with budget caps (per key/team/org/model, daily/monthly), auto-routing (cheap-first escalation), retry/fallback.
@@ -567,7 +567,7 @@ Category: Content OS / marketing platform
 Stars: 1.1k
 Forks: 323
 Recent Activity: 1,228 commits, 77 open issues/30 PRs — active but WIP
-License: MIT
+License: CORRECTED at Stage -2.4 (2026-08-24) — Stage -2.3 record incorrectly stated MIT; direct verification (file search + `gh repo view`, licenseInfo: null) found no LICENSE file exists in the repo at all. Treat as unlicensed/all-rights-reserved until the maintainers add one.
 Primary Language: Python (FastAPI/SQLAlchemy backend), TypeScript/React frontend
 Maturity: Active WIP, production-security features present (JWT/OAuth2, rate limiting)
 Claimed Purpose: "Brand brain" built from website/competitor/channel ingestion; covers strategy, multi-modal generation (blog/YouTube/podcast/LinkedIn), SEO, publishing, analytics.
@@ -849,12 +849,16 @@ genuine, confirmed coverage gaps rather than silently left unaddressed:
   blogs and academic RL/recsys papers with no social-content linkage. The concept
   ("closed-loop analytics") is discussed everywhere, implemented nowhere
   inspectable that this pass could find.
-- **DOM-18** (competitive & audience research automation) — no standalone DOM-18
-  candidate reached the DEEP AUDIT bar on its own merit; best available evidence
-  is `indranilbanerjee/digital-marketing-pro`'s embedded competitive-analysis
-  subsystem (cross-referenced from DOM-19). Open question for Stage -2.5/-2.6:
-  does that embedded subsystem actually satisfy DOM-18's need, or is this domain
-  still substantively uncovered?
+- **DOM-18** (competitive & audience research automation) — **RESOLVED at Stage
+  -2.4, no longer a gap.** Stage -2.3 flagged this as thin (only an
+  embedded-subsystem candidate, unverified). Stage -2.4's deep audit of
+  `indranilbanerjee/digital-marketing-pro` directly read its `competitive-intel`
+  agent code (`competitor-scraper.py`/`competitor-tracker.py`/`narrative-mapper.py`
+  — 222/537/759 lines, real, non-trivial) and confirmed genuine HTTP fetch+parse
+  research-synthesis (robots.txt-respecting, source/date/confidence-tagged
+  output), not a static-data wrapper — see
+  `phase-m2/repo-audits/indranilbanerjee-digital-marketing-pro.md` for detail.
+  DOM-18 now has real, code-verified coverage.
 
 ## Cross-Cluster Note
 
