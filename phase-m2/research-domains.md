@@ -192,6 +192,35 @@ architecture should not be left buried in a discovery-pass transcript either.
 
 ---
 
+## Owner-Approved Decisions (2026-08-25)
+
+Six additional Owner-supplied facts about Hermes itself were disclosed
+2026-08-25, mid Stage -2.4->-2.5, following the same handling precedent as
+`## Known Base Architecture` above: recorded as FACT, external to Phase -2's
+own decision process, not converted into implementation design this phase
+(per the Owner's own explicit instruction accompanying them). Full records —
+each with the verbatim statement, INTERPRETATION of its research
+implications kept visibly separate from the FACT itself, and affected
+domains — live in `decisions/OD-001` through `OD-006`. Summary:
+
+| ID | Decision | Domains Affected |
+|----|----------|-------------------|
+| OD-001 | Hermes is a private, single-user system | DOM-08, DOM-17, DOM-24 |
+| OD-002 | Shared global memory + separate per-project memory | DOM-11, DOM-12, DOM-19, DOM-24 |
+| OD-003 | Agent-to-agent access rules deferred to Phase -1 | DOM-08, DOM-01, DOM-02 |
+| OD-004 | "Hermes Control" performs quarterly reviews (knowledge/guidelines/workflows/tools/integrations/code/technical components) | DOM-25, DOM-15, DOM-14 |
+| OD-005 | Hermes Control may only suggest; Owner approval required for any update/removal | DOM-25, DOM-07 |
+| OD-006 | Every approved update requires backup + reliable rollback | DOM-11, DOM-13, DOM-25 |
+
+Each affected domain below carries a short "**Owner Decision Note**" line
+cross-referencing the relevant OD ID(s) — the domain's Research Question
+itself is left as originally written except where noted, since these six
+decisions sharpen evaluation criteria for Stage -2.5 onward rather than
+replacing the underlying research questions the way the base-architecture
+disclosure did.
+
+---
+
 ## Per-Domain Definitions
 
 ### DOM-01 — Multi-agent orchestration architecture
@@ -229,6 +258,9 @@ at the same underlying question once scoped to Hermes' fixed two-role case (Sect
 7.1 merge permission). Evidence source: raw idea, 2026-08-23. Reframed 2026-08-23
 around the known base architecture per Owner Stage -2.1 checkpoint response — see
 `## Known Base Architecture` above.
+**Owner Decision Note (2026-08-25):** OD-003 — the specific *access-control*
+rules between agents are deferred to Phase -1; handoff/contract mechanics
+themselves remain in scope. See `decisions/OD-003`.
 
 ### DOM-02 — Agent role & contract design
 **Research Question:** What role-definition and structured-I/O contract mechanism
@@ -258,6 +290,9 @@ contracts," and "Structured outputs" — same underlying problem (defining the
 interface, not just the actors). Evidence source: raw idea, 2026-08-23. Reframed
 2026-08-23 around the known base architecture per Owner Stage -2.1 checkpoint
 response.
+**Owner Decision Note (2026-08-25):** OD-003 — access-control rules between
+agents deferred to Phase -1; role/contract *shape* research (this domain)
+remains fully in scope. See `decisions/OD-003`.
 
 ### DOM-03 — Task decomposition for narrative/chained content workflows
 **Research Question:** How do agent systems decompose a multi-step, narratively
@@ -384,6 +419,10 @@ no reversible/irreversible distinction.
 **Rationale for Inclusion/Change:** Kept from seed list "Human-in-the-loop," narrowed
 to the irreversible-action framing explicit in the raw idea. Evidence source: raw
 idea, 2026-08-23.
+**Owner Decision Note (2026-08-25):** OD-005 — for the specific "Hermes
+Control" self-review/self-update surface (DOM-25), approval must be
+structurally enforced, not a configurable default; a directly evaluable bar
+for candidate patterns found under this domain. See `decisions/OD-005`.
 
 ### DOM-08 — Permissions & least-privilege scoping
 **Research Question:** How do systems scope what an agent is *capable of doing at
@@ -405,6 +444,11 @@ framing.
 **Rationale for Inclusion/Change:** Kept from seed list, distinguished from DOM-07
 (capability scoping vs. runtime confirmation are different mechanisms). Evidence
 source: raw idea, 2026-08-23 (multi-page framing).
+**Owner Decision Note (2026-08-25):** OD-001 — Hermes is single-owner/
+single-user; the threat model is per-project credential isolation for one
+owner's pages, not isolation between different external customers. OD-003 —
+specific agent-to-agent access rules deferred to Phase -1; pattern research
+here continues. See `decisions/OD-001`, `decisions/OD-003`.
 
 ### DOM-09 — Ambiguity detection & clarification-seeking behavior
 **Research Question:** How do agent systems detect that they're operating under
@@ -487,6 +531,12 @@ append-only/audit-log requirement, not a separate underlying problem. Evidence
 source: raw idea, 2026-08-23. Reframed 2026-08-23 around the known base architecture
 per Owner Stage -2.1 checkpoint response — this domain now carries a compliance-check
 character, not just a pattern search.
+**Owner Decision Note (2026-08-25):** OD-002 — memory has (at least) two
+tiers by design: shared global + separate per-project. Evaluate whether a
+candidate's never-delete guarantee holds across both tiers, not just one.
+OD-006 — a *backup* requirement (for approved Hermes Control updates) is
+related but distinct from this domain's never-delete-on-its-own principle;
+keep the two conceptually separate. See `decisions/OD-002`, `decisions/OD-006`.
 
 ### DOM-12 — Context engineering for long-running, narratively-continuous agents
 **Research Question:** How do agents maintain coherent working context (narrative
@@ -507,6 +557,10 @@ retrieval," "narrative continuity context window."
 **Status:** IN-PROGRESS
 **Rationale for Inclusion/Change:** Kept from seed list "Context engineering," scoped
 to the narrative-continuity need. Evidence source: raw idea, 2026-08-23.
+**Owner Decision Note (2026-08-25):** OD-002 — evaluate candidates against a
+concrete two-tier shape: does the mechanism cleanly separate global/general
+knowledge from project-specific narrative state, or conflate them? See
+`decisions/OD-002`.
 
 ### DOM-13 — Long-running agent reliability & failure recovery
 **Research Question:** What scheduling and reliability mechanism does `hermes-agent`
@@ -540,6 +594,10 @@ over time) once scoped to Hermes' continuous research-agent role. Evidence sourc
 raw idea, 2026-08-23. Reframed 2026-08-23 around the known base architecture
 (specifically its cron-scheduling capability, named by the Owner) per Owner Stage
 -2.1 checkpoint response.
+**Owner Decision Note (2026-08-25):** OD-006 — rollback/recovery evidence
+gathered here (crash-safety engineering, checkpoint discipline) is directly
+relevant comparison evidence for the backup+rollback requirement on approved
+Hermes Control updates (DOM-25). See `decisions/OD-006`.
 
 ### DOM-14 — Observability for autonomous-agent trust
 **Research Question:** What observability patterns (logging, dashboards, decision
@@ -562,6 +620,9 @@ traceability.
 **Status:** IN-PROGRESS
 **Rationale for Inclusion/Change:** Kept from seed list "Observability," tied
 explicitly to DOM-10's trust-calibration need. Evidence source: raw idea, 2026-08-23.
+**Owner Decision Note (2026-08-25):** OD-004 — observability/decision-trace
+evidence gathered here is a plausible input source for what "Hermes Control"
+(DOM-25) would review quarterly. See `decisions/OD-004`.
 
 ### DOM-15 — Agent evaluation & pre-publish quality gating
 **Research Question:** What evaluation/self-critique mechanisms let a content
@@ -584,6 +645,10 @@ pipeline-integration angle.
 **Rationale for Inclusion/Change:** Merge of seed topics "Agent evaluation" and
 "Content review" — content review is the applied instance of the general
 quality-gating question for this pipeline. Evidence source: raw idea, 2026-08-23.
+**Owner Decision Note (2026-08-25):** OD-004 — this domain's content-specific
+pre-publish gating is a distinct mechanism from "Hermes Control"'s periodic
+review of Hermes' own components (DOM-25) — related but not to be conflated.
+See `decisions/OD-004`.
 
 ### DOM-16 — Cost control & model-routing governance
 **Research Question:** What model-routing and cost/budget-enforcement mechanism does
@@ -637,6 +702,10 @@ agent-specific framing.
 **Rationale for Inclusion/Change:** Kept from seed list "Security and governance
 patterns," scoped to the concrete multi-account/publishing context implied by the raw
 idea rather than left generic. Evidence source: raw idea, 2026-08-23.
+**Owner Decision Note (2026-08-25):** OD-001 — Hermes is single-owner;
+"multi-account" here means multiple platform credentials per page under one
+owner, not isolation between different external customers. See
+`decisions/OD-001`.
 
 ### DOM-18 — Competitive & audience research automation
 **Research Question:** How do research agents automate finding "what's working in
@@ -681,6 +750,10 @@ multi-tenant/multi-voice angle (that's DOM-24's territory, not this one).
 **Rationale for Inclusion/Change:** Merge of seed topics "Content strategy," "Content
 planning," and "Brand consistency" — all describe the same strategic layer above
 execution-level task decomposition. Evidence source: raw idea, 2026-08-23.
+**Owner Decision Note (2026-08-25):** OD-002 — "project" in the Owner's
+memory-architecture decision plausibly maps to "page/brand" here; treat this
+mapping as INTERPRETATION, not confirmed FACT, until the Owner states it
+explicitly. See `decisions/OD-002`.
 
 ### DOM-20 — Multi-modal content generation (text/image/video, narrative continuity)
 **Research Question:** How do generation pipelines produce coherent multi-modal
@@ -806,6 +879,12 @@ known base architecture per Owner Stage -2.1 checkpoint response — not one of 
 capabilities the Owner listed by name, but extended here on the same logic since
 per-instance configuration is squarely a framework-architecture property, to be
 confirmed empirically at Stage -2.4 rather than left generically framed.
+**Owner Decision Note (2026-08-25):** OD-001 — "multi-tenant/multi-instance"
+means multiple projects/pages under one owner, not multiple external
+customers — confirms, does not change, this domain's existing framing. OD-002
+— a new project/page must get an isolated per-project memory tier without
+duplicating the shared global tier; a concrete provisioning requirement to
+evaluate candidates against. See `decisions/OD-001`, `decisions/OD-002`.
 
 ### DOM-25 — Self-updating ecosystem-intelligence agent design
 **Research Question:** How do systems architect an agent whose job is continuous
@@ -835,6 +914,15 @@ Added because the raw idea names this as a distinct research-agent role with no
 existing seed covering it, and it is distinctive enough (self-referential,
 recommendation-producing) to warrant separate treatment from general "Knowledge
 management." Evidence source: raw idea, 2026-08-23.
+**Owner Decision Note (2026-08-25):** OD-004 gives this domain a name
+("Hermes Control"), a concrete cadence (quarterly), and a broadened review
+surface (Hermes' own knowledge/guidelines/workflows/tools/integrations/code,
+not just external repos/tools) — sharpens, does not replace, the Research
+Question above. OD-005 requires suggest-only behavior with structurally
+enforced Owner approval (not a configurable default) for any candidate
+pattern. OD-006 requires backup + reliable rollback specifically for the
+update-application step. See `decisions/OD-004`, `decisions/OD-005`,
+`decisions/OD-006`.
 
 ---
 
