@@ -145,6 +145,51 @@ or similar, alongside the standard `phase-m2/repo-audits/nousresearch-hermes-age
 audit record — both should exist since they serve different purposes: one is a Phase
 -2 scored audit record, the other is a durable project-wide reference).
 
+**STAGE -2.3 FINDING — confirmed gap in REPO-001 relevant to DOM-24, logged
+2026-08-24, to be resolved (not re-discovered) at Stage -2.4:**
+
+A Stage -2.3 discovery pass searching for DOM-24 comparison baselines surfaced
+`NousResearch/hermes-agent` issue #34352, "Solving the Multi-Tenant Hermes
+Problem." This claim was independently verified by the primary Phase -2
+session directly against GitHub (`gh issue view 34352 --repo
+NousResearch/hermes-agent`, 2026-08-24) before being treated as fact — per the
+same discipline that discarded the Owner's earlier hallucinated cheat-sheet
+PDF, no claim about this framework is accepted without direct verification.
+
+**Verified FACT:** the issue is real, open, has 24 comments, and states that
+stock hermes-agent has no tenant isolation — memory is global, sessions do not
+scope by tenant/context. It documents 12+ related open issues clustering into
+four sub-problems (gateway adapter multi-instance, profile routing,
+memory/context isolation, session key correctness), none of which have a
+merged or open PR addressing them as of access date. One commenter
+self-reports a production incident (a content agent leaking
+competitor-monitoring memory into a public article) — this incident report
+itself is a third-party testimonial within a verified-real issue, not
+independently confirmed beyond the comment existing (see `source-register.md`
+SRC-028 for the FACT/CLAIM distinction preserved explicitly).
+
+This directly and materially affects DOM-24's research question ("does
+hermes-agent support multi-tenant instances as a config change, or would
+Hermes need to build a multi-tenancy layer on top"): the honest current answer,
+pending Stage -2.4's own independent code audit of REPO-001, is **no, not
+natively** — this is now a documented, source-level starting hypothesis for
+that audit, not something to re-derive from scratch. Two third-party projects
+addressing this exact gap were found and independently verified real
+(`gh repo view`) by the primary Phase -2 session: `NimbleCoAI/hermes-agent`
+(a production multi-tenant fork, REPO-040 in `repo-catalog.md`) and
+`NimbleCoAI/hermes-swarm-map` (a multi-tenant orchestration control plane,
+REPO-041), both reserved as DEEP AUDIT candidates for Stage -2.4, to be
+audited after REPO-001 itself per the sequencing note on REPO-040.
+
+This is reported as a finding for Stage -2.4 to formally confirm/audit, not as
+an escalation — it does not require Owner authorization to proceed with
+research, and Phase -2 still does not treat it as license to decide anything
+about Hermes' actual multi-tenancy design (Section 5.1/2.3 unchanged). It is
+flagged prominently here, and in the Stage -2.3 report to the Owner, because
+Section 5.1 forbids treating an unresolved high-impact assumption as fact —
+and the inverse also applies: a *resolved*, verified fact about the known base
+architecture should not be left buried in a discovery-pass transcript either.
+
 ---
 
 ## Per-Domain Definitions

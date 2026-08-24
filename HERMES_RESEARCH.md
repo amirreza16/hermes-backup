@@ -220,3 +220,70 @@ diminishing new signal by the third batch). Report Stage -2.2 summary to Owner; 
 direction on Stage -2.3 (Open Repository / Project Discovery) — noting REPO-001
 (`NousResearch/hermes-agent`) is already reserved as the mandatory first Stage -2.4
 deep-audit target regardless of Stage -2.3's own discovery funnel.
+
+### 2026-08-24 — Session 5: Stage -2.3 Open Repository / Project Discovery
+
+**What was inspected:**
+- Owner acknowledged the Stage -2.2 summary, confirmed OQ-01 (DOM-23) stays BLOCKED
+  pending a separate answer, and directed continuation to Stage -2.3, restating that
+  REPO-001 (`NousResearch/hermes-agent`) remains the mandatory first Stage -2.4
+  deep-audit target regardless of Stage -2.3's own discovery.
+- Executed Stage -2.3 per Section 8/9.2/15.2: split the 23 active (non-BLOCKED)
+  domains into 6 clusters and ran parallel discovery passes on each, per Section 15.2
+  (no mandatory repo list, no assumed relevance, broad category search seeds only).
+  Each pass triaged candidates against the Section 9.2 repository schema and declared
+  per-domain saturation independently (>=2 alternate-query rounds before stopping).
+  REPO-001 itself was explicitly excluded from re-discovery in every pass (already
+  reserved); passes for the 8 domains reframed around it (DOM-01/02/04/06/11/13/16/24)
+  were instructed to find *comparison baselines*, not to re-litigate the base
+  architecture choice.
+
+**Key findings:**
+- `phase-m2/repo-catalog.md` created: 49 records (REPO-002 through REPO-050).
+  Classification: 24 DEEP AUDIT, 19 REFERENCE ONLY, 6 REJECT. Every one of the 23
+  active domains has >=1 candidate or a documented gap (Stage -2.3 exit criterion
+  met).
+- `phase-m2/source-register.md` extended: 28 new non-repo sources (SRC-004 through
+  SRC-031) — official docs, papers, vendor writeups, and curated indices cited
+  alongside the repo candidates.
+- `phase-m2/rejected-candidates.md` extended: 6 new full Section 9.7 records (REJ-003
+  through REJ-008) for the substantively-inspected rejections.
+- **Verification catch:** one discovery pass (Cluster F, scaling/self-maintenance)
+  surfaced a GitHub issue on REPO-001 itself (`NousResearch/hermes-agent` #34352)
+  making a striking claim — stock hermes-agent has no tenant isolation, with a cited
+  production data-leak incident. Given this project's prior burn history with
+  hallucinated hermes-agent claims (the discarded cheat-sheet PDF, see Revision 2 of
+  `research-domains.md`), this was independently verified directly against GitHub via
+  `gh issue view`/`gh repo view` before being accepted rather than taken from the
+  discovering fork's summary alone. Confirmed real: the issue, its 24 comments, and
+  two derivative third-party projects (`NimbleCoAI/hermes-agent` fork and
+  `NimbleCoAI/hermes-swarm-map`) all genuinely exist. This is now logged as a
+  verified, source-level fact in `research-domains.md`'s Known Base Architecture
+  section (not an escalation — informational, doesn't require Owner authorization to
+  proceed research, but too significant to leave buried in a fork transcript) and as
+  SRC-028, with the specific incident claim inside the issue kept distinctly labeled
+  as reported/unverified per the FACT vs. CLAIM discipline (Section P5).
+- Three domains got their coverage explicitly confirmed as **thin/gap, not silently
+  skipped**: DOM-09 (ambiguity-detection trigger logic — no dedicated repo found
+  anywhere, consistent with Stage -2.2's identical finding), DOM-22 (analytics
+  feedback loops — concept discussed everywhere, no inspectable implementation
+  found), DOM-18 (competitive/audience research — only thin embedded-subsystem
+  coverage via a DOM-19 candidate, open question for Stage -2.5/-2.6 whether that
+  satisfies the domain).
+- Strongest candidates this stage (cross-cutting multiple domains, real code, real
+  maintenance signal): `microsoft/agent-governance-toolkit` (DOM-05/07/08),
+  `google/adk-python` (DOM-01/02/06), `jshiv/cronicle` (DOM-13/11/16/06),
+  `indranilbanerjee/digital-marketing-pro` (DOM-19/18), `langchain-ai/social-media-agent`
+  (DOM-07/21/19/20 — an unusually close structural analog to Hermes' entire
+  content-generation-agent shape, found via a cross-cluster flag and independently
+  verified before being added to the catalog).
+- No escalations triggered this session. No new open questions logged — the DOM-24
+  finding above is a resolved/verified fact, not an unresolved question.
+
+**Next step:**
+Stage -2.3 exit criteria met (all materially relevant candidates triaged; every
+active domain has source coverage or a documented gap; all 6 discovery clusters
+independently declared saturation). Report the Stage -2.3 summary — including the
+REPO-001 tenant-isolation finding — to the Owner; proceed to Stage -2.4 (Deep
+Repository Audit) once acknowledged, auditing REPO-001 first per the standing
+requirement, before its two derivative forks (REPO-040, REPO-041).
