@@ -287,3 +287,98 @@ independently declared saturation). Report the Stage -2.3 summary — including 
 REPO-001 tenant-isolation finding — to the Owner; proceed to Stage -2.4 (Deep
 Repository Audit) once acknowledged, auditing REPO-001 first per the standing
 requirement, before its two derivative forks (REPO-040, REPO-041).
+
+### 2026-08-24/25 — Session 6: Stage -2.4 Deep Repository Audit
+
+**What was inspected:**
+- Owner directed continuation to Stage -2.4, with three explicit instructions:
+  keep all existing decisions/constraints, independently verify the REPO-001
+  memory-isolation concern with direct evidence (not just the GitHub issue),
+  clearly separate confirmed findings from assumptions, and stop after the
+  stage for approval before Stage -2.5.
+- Before delegating, the primary session personally cloned `NousResearch/
+  hermes-agent` and directly verified the tenant-isolation question via code
+  (`gateway/profile_routing.py`, `docs/profile-routing.md`) and GitHub API
+  (`gh api`/`gh issue view`/`gh pr view`) rather than trusting the Stage -2.3
+  fork's summary of the issue. Finding: the blanket "no tenant isolation"
+  reading is partially outdated — a profile-routing/multiplexing mechanism was
+  merged into mainline 2026-08-10/11 (after the issue was filed), giving real
+  per-profile isolated memory/sessions, but it is opt-in and config-heavy. The
+  finer-grained automatic fix the issue's own thread names as "the core fix"
+  (PR #47552, `context_id` memory scoping, opened by NimbleCoAI from their
+  fork) remains open/unmerged in mainline as of access date.
+- Executed Stage -2.4 per Section 8/9.3: all 24 DEEP AUDIT repos from
+  `repo-catalog.md` plus REPO-001 itself (25 repos total) were deep-audited via
+  actual `git clone` + direct source/test/doc reading — never README alone —
+  across 6 parallel passes (one per Stage -2.3 cluster, plus a dedicated
+  REPO-001+REPO-040+REPO-041 pass given their priority and interdependency).
+  One fork (the REPO-001 trio) hit a session-limit API error partway through;
+  it had already written 3 of its 4 required files (REPO-001's audit, the
+  capability-reference document, and REPO-040's audit) before failing — the
+  primary session completed the missing 4th file (REPO-041,
+  `hermes-swarm-map`) directly, continuing the same clone-and-verify method
+  and cross-referencing the other three files' findings.
+
+**Key findings:**
+- `phase-m2/repo-audits/` created: 26 files (25 A-J audit records + the
+  standing-requirement capability-reference document for REPO-001). Every DEEP
+  AUDIT repo has a completed audit with FACT/INTERPRETATION/UNKNOWN labeling
+  per Section P5 and an Evidence section stating doc-vs-code (dis)agreement —
+  Stage -2.4's exit criterion.
+- **DOM-24 finding, now fully resolved with direct multi-source evidence:**
+  the three-repo REPO-001/040/041 story is coherent and verified end-to-end.
+  REPO-001 (upstream): isolation exists but is config-heavy, the lighter
+  automatic fix is an open PR. REPO-040 (`cyborg-garden/hermes-agent-mt` — org
+  renamed from NimbleCoAI, a real correction caught this stage, GHCR images at
+  the old org are frozen/stale, a real deployment trap): is that exact fix,
+  real and tested (dedicated test files, active edge-case-hardening commits),
+  running in production, pending upstream merge. REPO-041
+  (`hermes-swarm-map`): a fleet-orchestration control plane that deploys
+  REPO-040 (not plain REPO-001) **by default** — verified directly in its
+  Docker image config and test assertions, not assumed from its README.
+- **REPO-001 itself:** narrow-waist plugin architecture (Strong), no typed
+  role/contract abstraction for DOM-02 (Moderate), a real but off-by-default
+  approval-gate for memory/skill writes (Moderate for DOM-07, publish-specific
+  gating UNKNOWN — not found, not confirmed absent), and — a new, actionable
+  finding — `hermes_state.py` ships a real, permanent session/transcript
+  auto-deletion mechanism (`maybe_auto_prune_and_vacuum`, default 90-day
+  retention) that is off by default but would directly violate Hermes' never-
+  delete principle if an operator ever enables it. A recurring cross-cutting
+  pattern was flagged across three dimensions: hermes-agent repeatedly ships
+  the *mechanism* for safety/isolation properties Hermes needs, but defaults
+  it off — meaning Hermes cannot rely on defaults alone and would need an
+  enforced configuration profile or a fork.
+- Several Stage -2.3 triage characterizations were corrected on real
+  inspection (both directions — some strengthened, some weakened): AgentWard
+  and confidence-escalation are staler than "active" suggested (commits from
+  April/May 2026, not current); pr-agent's auto-approve/block logic exists in
+  code but is disabled on the live path (advisory comment-poster, not an
+  enforced gate — a correction to its DOM-15 characterization); ALwrity has no
+  LICENSE file at all (catalog incorrectly said MIT); LiteLLM is dual-licensed
+  (MIT core + separately-licensed enterprise/ carve-out); postiz-app's
+  retry/rollback for publishing was CONFIRMED real and unusually sophisticated
+  (differentiated Temporal retry policies by operation reversibility) —
+  resolving Stage -2.3's biggest open evidence gap; cronicle's log-rotation
+  conflict with DOM-11 was CONFIRMED and found stronger than flagged (its own
+  code/docs treat the rotated-and-eventually-deleted log as the authoritative
+  record, not just a disposable cache); DOM-18's coverage gap was RESOLVED
+  (digital-marketing-pro's competitive-research code is real, verified
+  non-trivial synthesis, not a static-data wrapper).
+- `phase-m2/repo-catalog.md` updated in place with 4 factual corrections
+  surfaced by deep audit: ALwrity license, LiteLLM license, the NimbleCoAI ->
+  cyborg-garden org rename (with the GHCR staleness trap noted), and DOM-18's
+  gap status changed from open to resolved.
+- No escalations triggered. No new open questions logged as ESCALATIONS —
+  several genuine UNKNOWNs were logged as explicit Stage -2.5/-2.6 follow-ups
+  inside the relevant audit files instead (e.g. whether hermes-agent's
+  memory-deletion call sites are user-command-only or autonomously reachable;
+  whether any of the three cost-tracking subsystems found this stage
+  [hermes-agent's billing, LiteLLM's — already confirmed enforcing — and
+  Swarm Map's budget-check] actually enforce vs. only report).
+
+**Next step:**
+Stage -2.4 exit criteria met (every DEEP AUDIT repo has a completed A-J file
+with Evidence-section doc-vs-code findings; the standing capability-reference
+deliverable is complete). Per the Owner's explicit instruction, STOP here and
+report to the Owner for approval before proceeding to Stage -2.5 (Pattern
+Extraction).

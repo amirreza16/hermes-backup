@@ -661,7 +661,18 @@ Date Triaged: 2026-08-24
 
 ```
 Repo: NimbleCoAI/hermes-agent (fork, "hermes-agent-mt")
-URL: https://github.com/NimbleCoAI/hermes-agent
+CORRECTED at Stage -2.4 (2026-08-25): the owning org renamed NimbleCoOrg ->
+cyborg-garden. Canonical repo is now cyborg-garden/hermes-agent-mt
+(https://github.com/cyborg-garden/hermes-agent-mt) — the old NimbleCoAI/
+hermes-agent URL still auto-redirects for git clone/browsing, but published
+container images do NOT redirect: `ghcr.io/nimblecoai/*` packages are frozen
+at their last build (2026-08-06/2026-07-21) and pull successfully but
+silently serve stale pre-rename code. See
+`phase-m2/repo-audits/nimblecoai-hermes-agent.md` Dimension "Architecture"
+note for detail. Update any future reference to the cyborg-garden URL/GHCR
+path.
+URL: https://github.com/NimbleCoAI/hermes-agent (redirects to
+https://github.com/cyborg-garden/hermes-agent-mt — use the new URL going forward)
 Category: Multi-tenant fork of REPO-001
 Recent Activity: active — "automated weekly upstream sync," recently rebased against ~410 upstream commits
 License: inherits hermes-agent's (MIT, per REPO-001's own README) — unconfirmed whether the fork's own patches carry a different license, verify at audit
