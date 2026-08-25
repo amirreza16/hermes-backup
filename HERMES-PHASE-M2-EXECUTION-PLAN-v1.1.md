@@ -1213,6 +1213,22 @@ Research should continue while new searches materially change understanding. Whe
 - **Escalations:** immediate, using the Section 5.3 format.
 - **End of phase:** full report = capstone document + reuse stack + exit status + handoff package summary.
 
+## 24.1 Owner-Relay Block Format (mandatory, every report to the Owner)
+
+The Owner does not read technical detail directly — they relay Claude Code's
+report to a separate assistant that translates it into plain language for
+them. So every report to the Owner (stage completions, checkpoints,
+escalations, the end-of-phase report) must end with one clearly-marked block,
+in addition to the normal report, containing everything that assistant needs
+in one place: what this task/stage was, what happened, what changed, what's
+next, and the single most important risk (if any) worth the Owner's attention
+— or an explicit "no significant risk" if there isn't one. Keep it short but
+complete; do not omit a real risk to keep it shorter. Write it under a
+clearly-marked heading, in whatever language and level of detail best
+transfers the substance — it is read by an AI relay, not the Owner directly,
+so optimize for complete and unambiguous transfer of meaning rather than a
+fixed format or language.
+
 ---
 
 # 25. CLAUDE.md Guardrail File Content

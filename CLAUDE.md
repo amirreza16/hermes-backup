@@ -2,6 +2,8 @@ PHASE: HERMES -2 / ECOSYSTEM INTELLIGENCE & REUSE DISCOVERY
 
 Canonical workspace root (this file's location): /root/m2-research-workspace
 Full Source of Truth: /root/m2-research-workspace/HERMES-PHASE-M2-EXECUTION-PLAN-v1.1.md
+Standing Efficiency Framework (phase-independent, carries forward past this
+phase — read on demand): /root/m2-research-workspace/AGENT-OPERATIONS.md
 
 This file is the operational layer, not a replacement for the Master Plan.
 For any schema, rubric, scoring rule, gate checklist, or detailed procedure,
@@ -42,6 +44,17 @@ After Stage -2.1, present the Approved Domain Registry to the Owner and wait for
 explicit response before starting discovery. Silence is not approval. Each stage
 has its own exit criteria and Quality Gate (G1-G7, Section 17) — read the relevant
 stage section in the Master Plan before starting it.
+
+---
+
+## SUB-AGENT OUTPUT DISCIPLINE (full framework: AGENT-OPERATIONS.md)
+
+Any sub-agent producing structured output meant to persist (a pattern record,
+catalog entry, audit finding, or similar) must Write it to its target file
+before returning; verify the file, do not reconstruct content from chat.
+Never send a live sub-agent a follow-up asking it to re-paste content already
+covered — relaunch a fresh, better-scoped call instead. Full standing-rules
+framework, deferred-decision triggers, and rationale: `AGENT-OPERATIONS.md`.
 
 ---
 
@@ -92,18 +105,9 @@ note (what / why / options / recommendation) -> proceed only on explicit respons
 
 ### Owner-Relay Block (mandatory, every report to the Owner)
 
-The Owner does not read technical detail directly — they relay your report to a
-separate assistant that translates it into plain language for them. So every report
-you give the Owner (stage completions, checkpoints, escalations, the end-of-phase
-report) must end with one clearly-marked block, in addition to your normal report,
-containing everything that assistant needs in one place: what this task/stage was,
-what happened, what changed, what's next, and the single most important risk (if
-any) worth the Owner's attention — or an explicit "no significant risk" if there
-isn't one. Keep it short but complete; do not omit a real risk to keep it shorter.
-Write it under a clearly-marked heading, in whatever language and level of detail
-best transfers the substance — it is read by an AI relay, not the Owner directly, so
-optimize for complete and unambiguous transfer of meaning rather than a fixed format
-or language.
+Every report to the Owner (stage completions, checkpoints, escalations,
+end-of-phase) ends with a clearly-marked Owner-Relay Block, in addition to
+the normal report. Full content/format spec: Master Plan Section 24.1.
 
 ---
 
