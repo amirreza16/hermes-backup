@@ -55,6 +55,21 @@ may also have changed by then.
 **Status as of 2026-08-25:** NOT MET. Zero lines of Hermes implementation
 code exist — Phase -2 is research-only.
 
+### 5. RTK — opt-in for external-repo-heavy exploration
+When doing Stage -2.3/-2.4-style work that involves cloning and reading many
+files from an external repo (structure checks, source reads, maintenance
+history checks), a sub-agent MAY invoke the RTK binary directly via Bash
+(`/root/m2-research-workspace/tools/rtk/rtk <subcommand>`, e.g. `rtk
+read`/`rtk find`/`rtk ls`/`rtk git log`) instead of native tools, for its
+compression benefit. Never run `rtk init`, `rtk config`, or any subcommand
+that installs a hook or modifies shell/system config — invoke only the
+read-only compression subcommands by full path.
+**Opt-in, not mandatory:** a sub-agent choosing not to use RTK is not a rule
+violation. No automatic hook, no default-on behavior, no system-wide
+integration.
+Measured effect: see Changelog entry 2026-08-25 (~11.7% token reduction on
+a real pilot task; lean-ctx was evaluated alongside it and rejected).
+
 ---
 
 ## Keeping This File Lean (self-governance)
@@ -134,3 +149,59 @@ protocol differed.
 
 **Not yet done:** Stage -2.5 has not been re-run under the new rule. The
 lost 44-record catalog has not been reconstructed.
+
+### 2026-08-25 — lean-ctx / RTK pilot; RTK approved opt-in, lean-ctx rejected, document-graph deferred
+
+**Design:** real, temporary, fully-reversible 3-way pilot — same
+Stage -2.3-style task (shallow-clone + lightweight triage of two real,
+fresh repos, `charmbracelet/glow` and `junegunn/fzf`, untouched elsewhere
+in this project) run three ways: native tools, RTK's CLI subcommands,
+lean-ctx's CLI subcommands. Write-before-return applied in all three,
+isolating only the compression-tool variable. Both tools installed from
+official GitHub release binaries into a scratch `/tmp` directory for the
+test only; fully deleted afterward (confirmed via `git status` and
+directory listing — no trace left).
+
+**Results:**
+- Baseline (native): **256,354 tokens**, 9 tool calls.
+- RTK: **226,395 tokens** (-29,959, **-11.7%**), 9 tool calls. No
+  restrictions encountered; worked cleanly on freshly cloned repos outside
+  the project root with zero configuration.
+- lean-ctx: **224,173 tokens** (-32,181, **-12.6%**), 11 tool calls — but
+  only via a workaround. Its actual compression mechanism (`read -m
+  full/map/signatures`) enforces a hardcoded sandbox locked to the
+  directory it first ran in; it refused to read the cloned target repos at
+  all ("path escapes project root"). Lifting this requires a persistent
+  `~/.config/lean-ctx/config.toml` edit, out of scope for an
+  evaluation-only pilot. The fork fell back to a weaker path (`lean-ctx -c
+  "cat <file>"`), which on one large source file compressed 590 of 644
+  lines away — aggressively enough that the fork had to separately read
+  the uncompressed file to actually understand the code, eating into the
+  measured saving in real terms.
+
+**Verdict:**
+- Both real, both far below vendor claims (60-90%), both an order of
+  magnitude smaller than write-before-return's measured 49.3%.
+- **RTK: approved, opt-in only** — Active Rule 5 above.
+- **lean-ctx: not adopted.** Structural mismatch with a workflow that
+  constantly explores content outside one fixed root, plus a real
+  comprehension-loss risk under aggressive compression — both observed
+  directly, not inferred.
+
+**Document-relationship graph (separate question, same session):**
+assessed against the corpus as it actually stands — 25 domains, 32 skills,
+49 repos, 31 sources, 8 rejected candidates, 6 Owner decisions (~156
+entities). Tested whether the existing informal approach (consistent
+`DOM-##`/`SKL-###`/etc. IDs + grep) already works: searching `DOM-11`
+alone surfaced 16 real, relevant files across catalogs, decisions, and
+audits. **Deferred, not built** — grep+consistent-IDs already functions at
+this scale, and Stage -2.6/-2.7 already own this cross-referencing work by
+design. Re-evaluation trigger: ~450-500+ entities, or a recurring (not
+hypothetical) need for multi-hop queries grep can't answer.
+
+**Update, 2026-08-25 (same day):** Owner approved and RTK installed —
+`tools/rtk/rtk`, pinned to release `dev-0.45.1-rc.362`
+(`rtk 0.42.4`, sha256 `63e66689...290d40ef`), not committed to git
+(`.gitignore`'d, provenance recorded in `tools/README.md`). No hook, no
+PATH/shell/system change. Active Rule 5's path now points at a real,
+verified-working binary.
