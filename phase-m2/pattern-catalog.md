@@ -78,11 +78,11 @@ cluster's records to a scratch file before returning, per that rule.
 | PAT-050 | Thin-Fork Weekly-Rebase Maintenance Discipline | F | DOM-24 | CANDIDATE | 70 |
 | PAT-051 | Cost-Tracking-Without-Confirmed-Enforcement (gap pattern) | F | DOM-16 | INSUFFICIENT EVIDENCE | N/A |
 
-**Distribution:** 51 records. 19 STRONG CANDIDATE, 20 CANDIDATE, 6
-CONTEXT-DEPENDENT, 1 AVOID, 5 INSUFFICIENT EVIDENCE (4 of the 5 are
-deliberate gap-documentation records, not weak candidates forced to fill a
-slot: PAT-028, PAT-045, PAT-051, plus PAT-028's sibling gap note under
-PAT-051; see "Documented Gaps" below).
+**Distribution:** 51 records. 21 STRONG CANDIDATE, 21 CANDIDATE, 5
+CONTEXT-DEPENDENT, 1 AVOID, 3 INSUFFICIENT EVIDENCE. All 3 INSUFFICIENT
+EVIDENCE records (PAT-028, PAT-045, PAT-051) are deliberate gap-documentation
+records, not weak candidates forced to fill a slot — see "Documented Gaps"
+below.
 
 ---
 
@@ -3522,6 +3522,176 @@ unfilled research need.** If this gap persists through Stage -2.6, it is
 itself a notable finding: Hermes' own Phase -2 research process may be the
 closest existing model for what DOM-25 actually needs, since no external
 precedent was found.
+
+---
+
+# Cross-Cluster Reconciliation
+
+Each of the six extraction forks flagged mechanisms it noticed that belonged
+primarily to another cluster's domain scope, so the coordinator could route
+them rather than have them silently dropped (per the Stage -2.5 fork
+instructions). This section closes the loop: which flags landed in a real
+pattern record, and which remain open.
+
+## Resolved (flag -> landing pattern)
+
+| Flag raised by | Mechanism | Landed in |
+|---|---|---|
+| Cluster A | REPO-001 write-approval/tool-confirmation trigger logic (DOM-07/09) | PAT-020 (Cluster C), PAT-016 (Cluster B) |
+| Cluster A | REPO-001 `hermes_state.py` hard-deletion / auto-prune (DOM-11) | PAT-021 |
+| Cluster A | REPO-001 billing subsystem enforcement-unknown (DOM-16) | PAT-028, PAT-051 |
+| Cluster A | REPO-001 profile-routing/tenant isolation (DOM-24) | PAT-046, PAT-047 |
+| Cluster A | REPO-001 cron/ + WAL crash-safety (DOM-13) | PAT-023, PAT-024 |
+| Cluster B | REPO-013's `ModelUpgradeHandler` / cost-routing (DOM-16) | Cross-referenced at PAT-015 <-> PAT-027 (not duplicated) |
+| Cluster B | SKL-019/SKL-014 overlap (DOM-14) | PAT-025 |
+| Cluster C | REPO-001 write-approval relevant to Cluster B's DOM-07 | Cross-referenced at PAT-020 <-> PAT-011/PAT-016 (not duplicated) |
+| Cluster C | REPO-001 billing subsystem relevant to Cluster D | PAT-028 (Cluster D's own independent finding; PAT-023 also notes it) |
+| Cluster D | D-06 (pr-agent advisory review) needs Cluster B's gate patterns | PAT-031 <-> PAT-011/PAT-016/PAT-017, explicitly paired |
+| Cluster D | SKL-030/SKL-007 already Cluster B's (not re-extracted) | Correctly avoided — PAT-017, PAT-008 are the canonical records |
+| Cluster E | E-05 brand-isolated storage vs. REPO-001 profile-routing (DOM-24) | PAT-037 <-> PAT-046/PAT-047, explicitly compared in both records |
+| Cluster E | E-07 prompt-only enforcement vs. governance-toolkit (DOM-05/07) | PAT-039 <-> PAT-010, explicitly paired |
+| Cluster E | E-01 ambiguity-routing corroborates Cluster B's DOM-09 finding | Folded into PAT-016's Strengths field as a third corroborating source |
+| Cluster F | F-03 "ships mechanism, defaults off" theme relevant to Clusters B/C | Cross-referenced at PAT-048 <-> PAT-020/PAT-021 |
+| Cluster F | F-06 cost-tracking-without-enforcement relevant to Cluster D | PAT-051 <-> PAT-028, explicitly corroborated as convergent finding |
+
+## Unresolved — genuine open items for Stage -2.6/-2.7
+
+These were flagged by one cluster's pass but never independently verified or
+extracted as a pattern by the cluster they were routed to. They are real
+research gaps, not oversights to silently paper over:
+
+1. **Agentward's `scan/` static pre-deployment dependency/toolchain risk
+   scanner** (flagged by Cluster B, relevant to DOM-17) was never
+   independently read or extracted as a pattern by Cluster D — DOM-17's
+   catalog coverage (PAT-030, PAT-032) does not include a pre-deployment
+   dependency-scanning mechanism. Real gap.
+2. **cronicle's `SKILL.md`-based skill-loading capability** (flagged by
+   Cluster C as relevant to DOM-04/06) was not picked up as a distinct
+   pattern by Cluster A — PAT-005 covers REPO-001's own SKILL.md
+   compatibility but not cronicle's independent implementation of the same
+   idea, which would have been a second corroborating source.
+3. **wind-comic's Director-agent coordination role** (`types/agents.ts`,
+   flagged by Cluster E as relevant to DOM-01) — neither the original
+   Stage -2.4 audit nor Cluster A's Stage -2.5 pass read this file in full.
+   Unread, unscored.
+4. **REPO-001 Dimension E's publish-specific approval-gating, explicitly
+   UNKNOWN (not confirmed absent)** (flagged by Cluster F as relevant to
+   Cluster B's DOM-07) — Cluster B's sources (governance-toolkit, humanlayer,
+   agentward, confidence-escalation) do not touch REPO-001 directly, so this
+   specific UNKNOWN was never independently investigated. Still open.
+5. **Cross-cluster orchestration-granularity triangulation**: PAT-001
+   (narrow-waist philosophy), PAT-034 (7-subgraph decomposition), and
+   PAT-042 (13-module decomposition) represent three different points on an
+   orchestration-granularity spectrum that no single cluster's evidence is
+   positioned to rank against Hermes' actual needs. Recommend a dedicated
+   Stage -2.6/-2.7 comparison pass rather than resolving from any one
+   cluster's framing.
+6. **`hermes security audit` CLI's dependency-CVE stage** (capability-
+   reference doc only; flagged by Cluster D relevant to PAT-032's DOM-17
+   credential-scanning gap) — the underlying implementation was not read,
+   only the CLI reference-table entry.
+
+---
+
+# Documented Gaps (Stage -2.5)
+
+Per Section P2/P5 discipline, a missing candidate is recorded as an explicit
+gap, not silently omitted or filled with a forced weak pattern:
+
+- **DOM-11** (append-only memory/audit-log architecture): no direct
+  off-the-shelf solution found across all of Phase -2's discovery. PAT-021
+  names the failure mode to avoid (AVOID); PAT-019/PAT-022 are partial,
+  adjacent mechanisms informative for a Hermes-specific design, not
+  themselves a solution. Consistent finding across Stage -2.2, -2.3, and now
+  -2.5.
+- **DOM-16 enforcement** (does hermes-agent's own billing subsystem actually
+  cap spend, or only report it?): unresolved — PAT-028 and PAT-051
+  independently confirm the same UNKNOWN from two structurally unrelated
+  repos (REPO-001, REPO-041). `docs/billing-lifecycle.md` remains unread.
+- **DOM-22** (analytics & experimentation feedback loops): zero inspectable
+  implementation found anywhere in Phase -2's 26 deep-audited repos or 32
+  skill records. PAT-045 documents the closest (inadequate) comparison
+  point.
+- **DOM-25** (self-updating ecosystem-intelligence agent): zero mechanism
+  found. Notable finding: Phase -2's own research process may be the closest
+  existing model, since no external precedent exists.
+- **DOM-23** (community/audience-engagement automation): remains BLOCKED per
+  OQ-01, not researched this stage per Owner instruction — not a Stage -2.5
+  gap, a standing scope exclusion.
+
+---
+
+# Gate G5 Self-Check (Stage -2.5 Exit Criteria, Master Plan Section 17)
+
+- [x] **Patterns cite sources.** All 51 records have an `Observed In` and
+  `Evidence` field citing REPO-/SKL- IDs and specific files/line numbers
+  where available.
+- [x] **Strong patterns cite >=2 independent sources OR one deep-audited
+  high-confidence source.** Verified per-record above; every one of the 19
+  STRONG CANDIDATE records states explicitly in its Recommendation/Evidence
+  reasoning which branch of this rule it satisfies.
+- [x] **Failure modes present.** All 51 records have a populated Failure
+  Modes field (the 3 pure gap-documentation records — PAT-028, PAT-045,
+  PAT-051 — use it to describe the risk of *mistaking the gap for a solved
+  problem*, consistent with their nature as negative/gap findings rather than
+  positive mechanisms).
+- [x] **Human-control implications present.** All 51 records have this field
+  populated, including explicit "None structurally" / "N/A" statements where
+  genuinely inapplicable (e.g. PAT-006, PAT-009, PAT-041, PAT-042 — pure
+  generation/integration mechanisms with no approval-gate relevance) rather
+  than left blank.
+- [x] **Every STRONG CANDIDATE has completed Adversarial Review (Section 13)
+  and Role Notes with disagreement preserved (Section 14).** Verified: all
+  21 STRONG CANDIDATE records (PAT-001, 003, 004, 005, 006, 010, 011, 016,
+  017, 022, 023, 026, 027, 030, 033, 035, 036, 041, 043, 047, 048) carry both
+  sections with at least Repository/Skill Auditor + Reliability Reviewer +
+  Skeptic notes, and every Skeptic section preserves a real, unresolved
+  objection rather than a rubber-stamped agreement. Note: PAT-020 and
+  PAT-046 are deliberately rated CANDIDATE, not STRONG, despite strong
+  individual source evidence — both are off-by-default/config-dependent
+  mechanisms per their own Weaknesses fields, and the forks judged that
+  dependency severe enough to withhold a STRONG rating even though the
+  evidence-quality bar alone would have supported one.
+
+**Stage -2.5 exit criteria met.** Every active (non-BLOCKED) domain has
+either >=1 pattern record or an explicit documented gap (see table below).
+
+---
+
+# Domain Coverage Summary (Stage -2.5, cross-check for Stage -2.6)
+
+| Domain | Patterns |
+|---|---|
+| DOM-01 (orchestration) | PAT-001, 002, 003, 004, 034, 042 |
+| DOM-02 (agent contracts) | PAT-002, 003, 004, 007, 008 |
+| DOM-03 (narrative/multi-modal gen) | PAT-034, 042, 044 |
+| DOM-04 (skill design) | PAT-001, 005 |
+| DOM-05 (prompt-reliability) | PAT-010, 039, 048 |
+| DOM-06 (tool-use/MCP) | PAT-001, 005, 006, 009 |
+| DOM-07 (approval gates) | PAT-004, 011, 016, 017, 020, 033, 035, 036, 040, 048 |
+| DOM-08 (least-privilege) | PAT-010, 012, 013, 014, 046, 047 |
+| DOM-09 (ambiguity) | PAT-004, 016, 033 |
+| DOM-10 (progressive autonomy) | PAT-015, 016, 018, 025 |
+| DOM-11 (append-only memory) | **GAP** — PAT-019, 020, 021 (AVOID), 022, 048 are adjacent/negative evidence only, not a solution |
+| DOM-12 (narrative continuity) | PAT-022 |
+| DOM-13 (scheduling reliability) | PAT-019, 023, 024 |
+| DOM-14 (observability/trust) | PAT-018, 022, 025 |
+| DOM-15 (pre-publish review) | PAT-008, 017, 031 |
+| DOM-16 (cost control) | PAT-002, 003, 015, 023, 026, 027, 028, 029, 051 |
+| DOM-17 (security/guardrails) | PAT-030, 032 |
+| DOM-18 (competitive research) | PAT-036, 038 |
+| DOM-19 (audience/brand strategy) | PAT-033, 036, 037, 038 |
+| DOM-20 (multi-modal generation) | PAT-033, 034, 041, 042, 043 |
+| DOM-21 (publish mechanics) | PAT-033, 035, 040 |
+| DOM-22 (analytics feedback) | **GAP** — PAT-045 is a documented non-solution |
+| DOM-23 (community management) | BLOCKED (OQ-01) — not in scope this stage |
+| DOM-24 (multi-tenant onboarding) | PAT-037, 046, 047, 048, 049, 050 |
+| DOM-25 (self-updating research agent) | **GAP** — no pattern found |
+
+23 of 24 active domains (all except DOM-23, which is BLOCKED) have >=1
+pattern record; 3 of those 23 (DOM-11, DOM-22, DOM-25) have only
+gap-documentation, not a positive candidate — carried forward explicitly,
+not silently dropped, per Section 8's Stage -2.5 exit criteria and Gate G5.
 
 ---
 
