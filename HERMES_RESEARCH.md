@@ -503,8 +503,140 @@ rule. Not attempted again until Session 8 below.
   follow-ups inside `pattern-catalog.md` itself, consistent with how Stage
   -2.4's own genuine UNKNOWNs were handled.
 
-**Next step:**
+**Next step (superseded below, same session):**
 Stage -2.5 exit criteria met (Gate G5 self-check complete in
 `pattern-catalog.md`). Per the Owner's standing instruction to continue
 autonomously and report progress rather than pause for a go-ahead,
 proceeding directly to Stage -2.6 (Capability Matrix).
+
+### 2026-08-29 — Session 8 (cont.): Stage -2.6 Capability Matrix, Stage -2.7 Synthesis, Exit Gate — Phase -2 end-of-phase
+
+**What was inspected:**
+- Continued the same autonomous run after a session-usage-limit reset;
+  re-verified Stage -2.5's output was intact and committed (git log showed
+  it auto-backed-up) before continuing, per no-repeat-completed-work
+  discipline.
+- Built Stage -2.6 per Section 8/A.4: one capability-matrix row per
+  Hermes research need x best-evidenced candidate, drawn directly from the
+  finished `pattern-catalog.md`, citing PAT-/REPO-/SKL-/SRC- IDs throughout.
+- Built Stage -2.7 per Section 8: assembled the capstone report and
+  decision file, ran a synthesis-level Skeptic pass across the whole reuse
+  stack (in addition to the per-pattern Section 13/14 review already
+  completed at Stage -2.5), and self-checked the Section 18 Exit Gate.
+
+**Key findings:**
+- `phase-m2/capability-matrix.md` created: ~55 rows across 24 active
+  domains (DOM-23 excluded, BLOCKED). Only 3 rows use REUSE (PAT-001,
+  PAT-005, PAT-024) — mechanisms confirmed present and functioning in
+  REPO-001 with no off-by-default caveat. A deliberate matrix rule: a
+  shipped-but-disabled-by-default mechanism (write-approval, tenant
+  isolation, etc.) is scored ADAPT/LIGHT, not REUSE, since the Owner's
+  behavioral principles require it to actually be turned on and verified —
+  a config flip is not zero-cost reuse. Gate G6 self-check included in the
+  file.
+- `HERMES-REUSE-STACK.md` (root) created: REUSE/ADAPT/REFERENCE/REJECT/
+  UNKNOWN buckets mirroring the matrix's candidate set, each entry citing
+  record IDs per Section 16.3. The synthesis-level Skeptic pass surfaced
+  three cross-cutting items no single pattern's own review could see on its
+  own: (1) the "ships mechanism, defaults off" theme recurs 5 separate
+  times across REPO-001/derivatives (write-approval, auto-prune, profile
+  isolation, context-scoped memory, cost enforcement) — Hermes needs one
+  deliberate, audited configuration profile turning all of them on
+  together, not five independent opt-ins assumed safe in isolation, and
+  this is now flagged as the single highest-leverage early Phase -1 action;
+  (2) AGPL-3.0 exposure clusters around both of PAT-035's source repos,
+  worth one licensing review rather than per-candidate; (3) the
+  orchestration-granularity question (PAT-001 vs. PAT-034 vs. PAT-042) is
+  asked three times across the catalog and answered zero times — surfaced
+  once here as a single open design question.
+- `phase-m2/HERMES-CAPABILITY-INTELLIGENCE-M2.md` created: full 24-section
+  capstone per Section 16.2, synthesizing all nine prior deliverables into
+  an executive narrative without duplicating their full detail.
+- `phase-m2/downstream-handoff.md` created with all 10 required contract
+  items (Section 19.2) and a full Section 18 Exit Gate self-check: **X1
+  through X10 all HOLD.** Exit status determined as
+  **M2-CONDITIONALLY-COMPLETE** — not M2-COMPLETE, because real, non-
+  blocking unknowns remain (OQ-01/DOM-23 still BLOCKED on an Owner scope
+  question; DOM-11/DOM-22/DOM-25 have documented gaps, not candidates) —
+  and not M2-INCOMPLETE, since X1-X7 all hold and none of those unknowns
+  blocks Phase -1's fit/adaptation analysis from starting on everything
+  else. Full rationale and per-condition verification in the file itself.
+- No escalations triggered this session. OQ-01 remains the one standing
+  blocking item, unchanged from Stage -2.1 — not newly raised, just
+  reconfirmed still open at phase-end per the handoff's own Section 8 (Open
+  Questions) requirement to distinguish blocking from non-blocking.
+
+**Next step:**
+Phase -2 exit criteria met at CONDITIONALLY-COMPLETE status. Per CLAUDE.md's
+reporting cadence, this is the end-of-phase report: capstone + reuse stack +
+exit status + handoff summary, reported to the Owner in this session with
+the mandatory Owner-Relay Block. Awaiting Owner acknowledgment/direction on
+OQ-01 and the three documented gaps before Phase -1 begins — that decision
+belongs to the Owner and to Phase -1's own scope, not to this phase.
+
+### 2026-08-29 — Session 8 (cont.): Post-phase-end accuracy correction — PAT-021 conflation
+
+**What was inspected:**
+- The Owner asked for a detailed breakdown of the "five ships-mechanism-
+  defaults-off" findings cited in the phase-end report. Answering that
+  question directly surfaced that PAT-021 (the session/transcript
+  auto-prune guard) had been incorrectly grouped with the other four
+  findings under one "needs to be turned on" framing — PAT-021 is a
+  destructive mechanism whose off-by-default state is the *correct,
+  currently-protective* one; it must be locked off, never enabled. The
+  Owner then asked whether this error was only in the chat summary or
+  also written into the completed deliverables.
+- Grepped and read the exact surrounding text in all three deliverables
+  named in the Owner's question — `HERMES-REUSE-STACK.md`,
+  `phase-m2/HERMES-CAPABILITY-INTELLIGENCE-M2.md` (Executive Summary and
+  Section 22 Risks, checked separately since they're independent
+  passages), and `phase-m2/downstream-handoff.md` Section 4 — before
+  reporting back, rather than answering from memory of having written
+  them.
+
+**Key findings:**
+- The imprecise framing was confirmed present in **four** locations across
+  three files, not just the chat recap:
+  1. `HERMES-REUSE-STACK.md`, Synthesis-Level Skeptic Pass item 1 (no
+     hedge — called PAT-021 a "real protective mechanism" in the same
+     sentence that correctly labels it REJECT).
+  2. `phase-m2/HERMES-CAPABILITY-INTELLIGENCE-M2.md`, Executive Summary
+     (no hedge).
+  3. `phase-m2/HERMES-CAPABILITY-INTELLIGENCE-M2.md`, Section 22 Risks
+     (partially self-corrected — already hedged the cost-enforcement case
+     with "or leave its enforcement status unconfirmed" — but still ended
+     with "turn all of them on together," which still misstated PAT-021).
+  4. `phase-m2/downstream-handoff.md`, Section 4 (Candidate Assumptions
+     Register) — no hedge; contained the clearest single misstatement,
+     "none of them protect anything," which is backwards for PAT-021
+     specifically.
+- Root cause: the original synthesis-level Skeptic pass (Stage -2.7)
+  correctly labeled PAT-021 as REJECT everywhere it was scored
+  individually, but when writing the *cross-cutting* cumulative-risk
+  finding across all five REPO-001 "ships mechanism" instances, the
+  individual-record correctness didn't carry through to the summary
+  language — a compression error at the synthesis layer, not a finding
+  that was wrong at the source (every individual PAT-021 record, in
+  `pattern-catalog.md` and `HERMES-REUSE-STACK.md`'s own REJECT section,
+  was and remains correctly stated).
+- Fixed all four locations per the Owner's explicit correction, which also
+  sharpened a related, previously-blurred distinction: PAT-028/PAT-051
+  (cost enforcement) is not "off by default" in the same sense as
+  PAT-020/PAT-046/PAT-047 — its enforcement status is genuinely
+  UNCONFIRMED in either direction, not confirmed-present-but-disabled.
+  All four corrected passages now distinguish three cases (protective/
+  needs-enabling; destructive/needs-locking-off; status-unconfirmed/
+  needs-investigation) instead of one uniform bucket, and each correction
+  is marked inline with a "[Corrected 2026-08-29]" note pointing back to
+  this entry, per the Owner's instruction that this be a traceable,
+  non-silent edit to a completed deliverable.
+
+**Next step:**
+No further action required on this correction — all four flagged
+locations fixed and cross-referenced to this entry. Phase -2 remains at
+M2-CONDITIONALLY-COMPLETE; the correction changes the framing of one
+cross-cutting risk finding, not the exit status or any individual pattern
+record's classification (PAT-021 was already correctly scored REJECT
+everywhere except the four cross-cutting summary passages just fixed).
+Still awaiting Owner direction on OQ-01 and the three documented gaps
+before Phase -1 begins.

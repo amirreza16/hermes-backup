@@ -52,16 +52,32 @@ IDs per Section 16.3's rules.
 
 ## 4. Candidate Assumptions Register
 
-The recurring, load-bearing assumption across the majority of ADAPT/REUSE
-entries touching REPO-001: that safety/isolation mechanisms which ship
-**off by default** (write-approval, auto-prune guard, profile isolation,
-context-scoped memory, cost enforcement) will actually be explicitly
-enabled and verified by whoever configures Hermes — none of them protect
-anything on a stock, unconfigured deployment. This single assumption
-underlies PAT-020, PAT-021 (REJECT — names the failure mode this assumption
-must guard against), PAT-046, PAT-047, PAT-028/PAT-051. Secondary
-assumptions are recorded per-pattern in `pattern-catalog.md`'s Required
-Conditions and Adversarial Review Q1 fields.
+**[Corrected 2026-08-29 — see `HERMES_RESEARCH.md`; the prior version of
+this entry treated PAT-021 as a mechanism needing to be "enabled and
+verified" alongside PAT-020/PAT-046/PAT-047, which is backwards — PAT-021
+is destructive, and its default-off state is the one currently protecting
+Hermes' never-delete principle.]**
+
+The recurring, load-bearing assumption across the majority of ADAPT
+entries touching REPO-001 splits into three distinct cases, not one
+uniform posture:
+- **PAT-020 (write-approval), PAT-046/PAT-047 (tenant/profile isolation):**
+  real protective mechanisms that ship off by default and protect nothing
+  on a stock, unconfigured deployment — the assumption here is that
+  whoever configures Hermes will actually enable and verify them.
+- **PAT-021 (REJECT — auto-prune guard):** the inverse assumption applies —
+  this is a real, permanent-deletion mechanism whose off-by-default state
+  is what currently keeps a stock deployment compliant with the never-delete
+  principle. The load-bearing assumption to guard against is the opposite
+  one: that this stays off, structurally, not that it gets turned on.
+- **PAT-028/PAT-051 (cost enforcement):** neither "off" nor "on" is
+  confirmed — no enforcement call site was found in either REPO-001's
+  billing subsystem or REPO-041's budget-check within this phase's search
+  depth. The assumption to avoid here is treating the presence of
+  cost-tracking code as evidence that spend is actually capped.
+
+Secondary assumptions are recorded per-pattern in `pattern-catalog.md`'s
+Required Conditions and Adversarial Review Q1 fields.
 
 ## 5. Conflicts & Overlap
 

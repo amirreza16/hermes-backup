@@ -425,19 +425,46 @@ STRONG CANDIDATE patterns during Stage -2.5, this pass asks: does the
 **combination** of everything above introduce a risk no single pattern's
 own review would surface?
 
-1. **Cumulative "ships mechanism, defaults off" exposure.** PAT-020
-   (write-approval), PAT-021 (auto-prune — REJECT), PAT-046/PAT-047
-   (tenant isolation), and PAT-028/PAT-051 (cost enforcement) are five
-   separate instances of the same underlying posture in REPO-001 and its
-   derivatives: real protective mechanisms that do nothing unless an
-   operator explicitly configures them on. Taken individually, each is a
-   LIGHT-to-MEDIUM adaptation. Taken together, they imply Hermes cannot
-   trust REPO-001's *defaults* for any of its three named behavioral
-   principles (irreversible-action confirmation, cost control, never-delete)
-   — it needs one deliberate, audited configuration profile (or a fork)
-   that turns all of them on at once, not five independent opt-ins assumed
-   safe in isolation. This is the single highest-leverage finding for
-   Phase -1 to act on early, before any other adaptation work.
+1. **Cumulative "REPO-001's defaults can't be trusted at face value"
+   exposure — three distinct cases, not one uniform pattern.** [Corrected
+   2026-08-29 — see `HERMES_RESEARCH.md` for the dated correction entry;
+   the version of this item before correction incorrectly lumped all five
+   findings below into one "needs to be turned on" bucket, which
+   misstated PAT-021.]
+   - **(a) Genuinely protective, off, needs deliberate verified enabling:**
+     PAT-020 (write-approval) and PAT-046/PAT-047 (tenant/profile
+     isolation) are real protective mechanisms that do nothing unless an
+     operator explicitly configures them on. These are the ones Phase -1
+     should plan to turn on, deliberately and verified, not assume are
+     already working.
+   - **(b) Destructive, off, must be LOCKED off — not turned on with (a):**
+     PAT-021 (auto-prune) is the opposite case. It is a real, permanent
+     deletion mechanism, and its being off by default is the *correct,
+     currently-protective* state, directly required by Hermes' never-delete
+     principle. It must never be enabled alongside (a) — the correct
+     action is a structural guarantee it stays off (a config lock,
+     patching the deletion path out entirely, or replacing it with a
+     non-destructive alternative such as archival/cold storage), not
+     "turning it on" under any framing.
+   - **(c) Status unconfirmed, neither on nor off established:**
+     PAT-028/PAT-051 (cost enforcement, REPO-001's billing subsystem and
+     REPO-041's budget-check) are not confirmed to be disabled the way (a)
+     and (b) are — no enforcement call site was found in either direction
+     within this phase's search depth. This needs two specific unread
+     sources closed before any enable/disable claim is made: REPO-001's
+     `docs/billing-lifecycle.md` (named, never read) and a full sweep of
+     REPO-041's dashboard/`components/` code (not completed this phase).
+   Taken individually, (a) is a LIGHT-to-MEDIUM adaptation, (b) is a
+   REJECT requiring a structural guardrail rather than any adaptation
+   level, and (c) is UNKNOWN pending the two reads above. Taken together,
+   they mean Hermes cannot trust REPO-001's defaults uncritically for any
+   of its three named behavioral principles (irreversible-action
+   confirmation, cost control, never-delete) — but the corrective action
+   is different for each: enable-and-verify for (a), lock-off for (b),
+   investigate-before-acting for (c). This is the single highest-leverage
+   finding for Phase -1 to act on early, before any other adaptation
+   work — provided it is acted on with these three distinct corrective
+   actions, not one uniform "turn it all on."
 2. **AGPL exposure clusters, not just PAT-035.** Both of PAT-035's source
    repos (postiz-app, brightbean-studio) are AGPL-3.0; PAT-014's source
    (agentward) is Business Source License 1.1 until 2028. If Phase -1 ever

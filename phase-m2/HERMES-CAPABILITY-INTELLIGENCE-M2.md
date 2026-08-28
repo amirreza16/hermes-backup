@@ -21,14 +21,28 @@ detailed below).
 The single most consequential finding is not any one pattern but a
 recurring structural theme confirmed independently across five separate
 mechanisms in REPO-001 (`NousResearch/hermes-agent`, Hermes' Owner-disclosed
-fixed base architecture) and its derivatives: real, working safety/
-isolation mechanisms exist for every one of Hermes' three named behavioral
-principles (irreversible-action confirmation, cost control, never-delete
-history) — but every one of them ships **off by default**, relying on an
-operator to remember to enable and verify it. This means Hermes cannot
-inherit safety from REPO-001's defaults; it needs one deliberate,
-audited configuration profile (or a targeted fork) that turns all of them
-on together, verified — not five independent, easy-to-miss opt-ins.
+fixed base architecture) and its derivatives — though, corrected here
+2026-08-29 (see `HERMES_RESEARCH.md`), these five split into three
+genuinely distinct cases, not one uniform "off by default" bucket. Three
+are real, working protective mechanisms that sit inert until an operator
+explicitly enables and verifies them: write-approval gating (irreversible-
+action confirmation) and two tenant/profile-isolation mechanisms. A fourth,
+the session/transcript auto-prune guard, is the opposite case — it is a
+real, permanent-deletion mechanism, and its being off by default is the
+*correct, currently-protective* state for the never-delete principle; it
+must be structurally locked off, never enabled alongside the other three.
+A fifth, cost-enforcement (spanning REPO-001's billing subsystem and
+REPO-041's budget-check), is not confirmed to be off at all — no
+enforcement call site was found in either direction within this phase's
+search depth, and two specific sources needed to resolve it were never
+read. This means Hermes cannot inherit safety from REPO-001's defaults
+uncritically for any of its three named behavioral principles
+(irreversible-action confirmation, cost control, never-delete) — but the
+corrective action differs by case: deliberately enable-and-verify the
+protective three, structurally lock the destructive one off, and
+investigate the unconfirmed one before making any enable/disable claim
+about it. Full three-way breakdown: `HERMES-REUSE-STACK.md`'s
+Synthesis-Level Skeptic Pass, item 1.
 
 Three genuine, exhaustively-searched-and-not-found gaps remain: DOM-11
 (append-only memory/audit-log architecture), DOM-22 (analytics/
@@ -402,14 +416,32 @@ section) — genuine open items, not oversights papered over.
 
 ## 22. Risks
 
-The dominant cross-cutting risk, confirmed independently five separate
-times: REPO-001 and its derivatives repeatedly ship the *mechanism* for a
-safety/isolation property Hermes needs (write-approval, auto-prune guard,
-profile isolation, context-scoped memory isolation, cost enforcement) but
-default it off or leave its enforcement status unconfirmed. Hermes cannot
-rely on defaults alone — it needs one deliberate, audited configuration
-profile (or a targeted fork) verified to turn all of them on together,
-addressed once at Phase -1's outset rather than discovered piecemeal.
+**[Corrected 2026-08-29 — see `HERMES_RESEARCH.md`; the prior version of
+this section applied one uniform "turn it on" framing across all five
+findings below, which incorrectly included the auto-prune guard.]**
+
+The dominant cross-cutting risk, confirmed independently across five
+findings that split into three distinct cases: REPO-001 and its
+derivatives repeatedly ship the *mechanism* for a safety/isolation property
+Hermes needs, but the correct response differs by case. (1) Write-approval
+gating and profile/context-scoped tenant isolation are real, working
+mechanisms that default off and need to be deliberately enabled and
+verified — Hermes cannot assume these protect anything on a stock
+deployment. (2) The session/transcript auto-prune guard is the opposite:
+it is a real, permanent-deletion mechanism whose default-off state is
+*correct and currently protective* for the never-delete principle — it
+must be structurally locked off (config lock, patched out, or replaced
+with a non-destructive alternative), never enabled alongside case (1). (3)
+Cost enforcement (REPO-001's billing subsystem, REPO-041's budget-check)
+has an unconfirmed status in either direction — no enforcement call site
+was found, but two specific sources that could resolve this
+(`docs/billing-lifecycle.md`, REPO-041's dashboard code) were never fully
+read this phase. Hermes cannot rely on REPO-001's defaults uncritically —
+it needs one deliberate, audited configuration pass at Phase -1's outset
+that enables-and-verifies case (1), confirms case (2) stays locked off, and
+resolves case (3) before assuming either direction, rather than treating
+all five as one uniform "turn it on" action. Full breakdown:
+`HERMES-REUSE-STACK.md`'s Synthesis-Level Skeptic Pass, item 1.
 Secondary risks: AGPL-3.0 exposure clusters around the two social-media
 publish-mechanics repos if code-level (not pattern-level) reuse is ever
 considered; an unmerged upstream PR (#47552) and an external fork
