@@ -22,16 +22,22 @@ The single most consequential finding is not any one pattern but a
 recurring structural theme confirmed independently across five separate
 mechanisms in REPO-001 (`NousResearch/hermes-agent`, Hermes' Owner-disclosed
 fixed base architecture) and its derivatives — though, corrected here
-2026-08-29 (see `HERMES_RESEARCH.md`), these five split into three
-genuinely distinct cases, not one uniform "off by default" bucket. Three
-are real, working protective mechanisms that sit inert until an operator
-explicitly enables and verifies them: write-approval gating (irreversible-
-action confirmation) and two tenant/profile-isolation mechanisms. A fourth,
-the session/transcript auto-prune guard, is the opposite case — it is a
+2026-08-29 (see `HERMES_RESEARCH.md`), these five split into four
+genuinely distinct cases, not one uniform "off by default" bucket. Two
+are real, working protective mechanisms, native to REPO-001 mainline,
+that sit inert until an operator explicitly enables and verifies them:
+write-approval gating (irreversible-action confirmation) and
+profile-based tenant isolation. A third, the session/transcript
+auto-prune guard, is the opposite case — it is a
 real, permanent-deletion mechanism, and its being off by default is the
 *correct, currently-protective* state for the never-delete principle; it
-must be structurally locked off, never enabled alongside the other three.
-A fifth, cost-enforcement (spanning REPO-001's billing subsystem and
+must be structurally locked off, never enabled alongside the first two.
+A fourth, context-scoped tenant isolation, is not a "flip it on" case at
+all: it is not merged into REPO-001 mainline, existing only as an open,
+unmerged upstream PR and as a running fix in a third-party fork — the
+real choice is wait for merge, depend on the fork, or reimplement
+independently, not enable an existing stock-deployment switch. A fifth,
+cost-enforcement (spanning REPO-001's billing subsystem and
 REPO-041's budget-check), is not confirmed to be off at all — no
 enforcement call site was found in either direction within this phase's
 search depth, and two specific sources needed to resolve it were never
@@ -39,17 +45,25 @@ read. This means Hermes cannot inherit safety from REPO-001's defaults
 uncritically for any of its three named behavioral principles
 (irreversible-action confirmation, cost control, never-delete) — but the
 corrective action differs by case: deliberately enable-and-verify the
-protective three, structurally lock the destructive one off, and
-investigate the unconfirmed one before making any enable/disable claim
-about it. Full three-way breakdown: `HERMES-REUSE-STACK.md`'s
+protective two, structurally lock the destructive one off, choose a
+dependency path for the unmerged one, and investigate the unconfirmed
+one before making any enable/disable claim about it. Full four-way
+breakdown: `HERMES-REUSE-STACK.md`'s
 Synthesis-Level Skeptic Pass, item 1.
 
-Three genuine, exhaustively-searched-and-not-found gaps remain: DOM-11
-(append-only memory/audit-log architecture), DOM-22 (analytics/
-experimentation feedback loops), and DOM-25 (self-updating ecosystem-
-intelligence agent design). None of these were papered over with a forced
-weak candidate — each is documented as an open Hermes-specific design
-question for Phase -1, consistent with Section P2/P5 discipline throughout
+Three genuine gaps remain, though only one was actually searched to
+exhaustion: DOM-11 (append-only memory/audit-log architecture) found no
+candidate across a search consistent across three separate stages, the
+one gap of the three this phase can call exhaustively searched. DOM-22
+(analytics/experimentation feedback loops) and DOM-25 (self-updating
+ecosystem-intelligence agent design) remain open but not exhaustively
+searched — each has a specific, named follow-up this phase did not
+attempt: a dedicated discovery pass scoped to platform-analytics-
+ingestion tooling for DOM-22, and inspecting REPO-001's own `hermes
+curator`/`hermes journey` CLI commands for DOM-25. None of these three
+were papered over with a forced weak candidate — each is documented as an
+open Hermes-specific design question for Phase -1, consistent with
+Section P2/P5 discipline throughout
 this phase.
 
 No architecture, framework, or version structure has been locked. This
@@ -311,7 +325,7 @@ been an open Stage -2.3 coverage gap on DOM-18 with real, code-verified,
 non-trivial synthesis (its own test suite exceeded its catalog claim, a
 rare positive-direction evidence correction). DOM-22 (analytics/
 experimentation feedback loops) remains a fully open gap — zero
-inspectable implementation found anywhere in this research's 26
+inspectable implementation found anywhere in this research's 25
 deep-audited repos or 32 skill records.
 
 ---
@@ -391,21 +405,27 @@ scene-carryover — useful only as a documented lower bound).
 
 ## 21. Knowledge Gaps
 
-Three genuine, exhaustively-searched gaps, none papered over:
+Three genuine gaps, none papered over — but only one was actually
+searched to exhaustion:
 
 - **DOM-11** (append-only memory/audit-log architecture): no off-the-shelf
   solution anywhere in this research; two independent negative examples
   (REPO-001, cronicle) sharpen the failure mode to avoid without
-  constituting a solution.
+  constituting a solution. Consistent finding across Stage -2.2, -2.3, and
+  -2.5 — the one gap of the three this phase can actually call
+  exhaustively searched.
 - **DOM-22** (analytics & experimentation feedback loops): zero
-  inspectable implementation found across 26 deep-audited repos and 32
-  skill records.
+  inspectable implementation found across 25 deep-audited repos and 32
+  skill records — not exhaustively searched, though: a dedicated
+  discovery pass scoped specifically to platform-analytics-ingestion
+  tooling was never attempted this phase.
 - **DOM-25** (self-updating ecosystem-intelligence agent design): zero
   mechanism found; this phase's own research process may be the closest
   existing model, since no external precedent exists. REPO-001's `hermes
   curator`/`hermes journey` CLI commands were noted but never inspected
   beyond a reference-table entry — a real remaining follow-up before
-  concluding this is a true external gap.
+  concluding this is a true external gap, so this is not exhaustively
+  searched either.
 
 Additionally, 6 cross-cluster flags raised during Stage -2.5 pattern
 extraction were never independently resolved by the cluster they were
@@ -418,35 +438,43 @@ section) — genuine open items, not oversights papered over.
 
 **[Corrected 2026-08-29 — see `HERMES_RESEARCH.md`; the prior version of
 this section applied one uniform "turn it on" framing across all five
-findings below, which incorrectly included the auto-prune guard.]**
+findings below, which incorrectly included the auto-prune guard. A
+same-day second correction split case (1) below, which still incorrectly
+folded PAT-047 (not merged into REPO-001 at all) in with PAT-020/PAT-046
+(real mainline mechanisms, just off by default).]**
 
 The dominant cross-cutting risk, confirmed independently across five
-findings that split into three distinct cases: REPO-001 and its
+findings that split into four distinct cases: REPO-001 and its
 derivatives repeatedly ship the *mechanism* for a safety/isolation property
 Hermes needs, but the correct response differs by case. (1) Write-approval
-gating and profile/context-scoped tenant isolation are real, working
-mechanisms that default off and need to be deliberately enabled and
-verified — Hermes cannot assume these protect anything on a stock
-deployment. (2) The session/transcript auto-prune guard is the opposite:
+gating and profile-scoped tenant isolation are real, working mechanisms,
+native to REPO-001 mainline, that default off and need to be deliberately
+enabled and verified — Hermes cannot assume these protect anything on a
+stock deployment. (2) The session/transcript auto-prune guard is the opposite:
 it is a real, permanent-deletion mechanism whose default-off state is
 *correct and currently protective* for the never-delete principle — it
 must be structurally locked off (config lock, patched out, or replaced
 with a non-destructive alternative), never enabled alongside case (1). (3)
+Context-scoped tenant isolation (PAT-047) is not case (1) despite the
+surface similarity — it is not merged into REPO-001 mainline at all,
+existing only as an open, unmerged upstream PR (#47552) and as a running
+fix in an external fork (`cyborg-garden`) that Hermes does not control.
+There is no stock-deployment switch to flip; the real choice is wait for
+the PR to merge, depend on the fork, or reimplement independently. (4)
 Cost enforcement (REPO-001's billing subsystem, REPO-041's budget-check)
 has an unconfirmed status in either direction — no enforcement call site
 was found, but two specific sources that could resolve this
 (`docs/billing-lifecycle.md`, REPO-041's dashboard code) were never fully
 read this phase. Hermes cannot rely on REPO-001's defaults uncritically —
 it needs one deliberate, audited configuration pass at Phase -1's outset
-that enables-and-verifies case (1), confirms case (2) stays locked off, and
-resolves case (3) before assuming either direction, rather than treating
-all five as one uniform "turn it on" action. Full breakdown:
-`HERMES-REUSE-STACK.md`'s Synthesis-Level Skeptic Pass, item 1.
+that enables-and-verifies case (1), confirms case (2) stays locked off,
+resolves the dependency choice in case (3), and resolves case (4) before
+assuming either direction, rather than treating all five findings as one
+uniform "turn it on" action. Full breakdown: `HERMES-REUSE-STACK.md`'s
+Synthesis-Level Skeptic Pass, item 1.
 Secondary risks: AGPL-3.0 exposure clusters around the two social-media
 publish-mechanics repos if code-level (not pattern-level) reuse is ever
-considered; an unmerged upstream PR (#47552) and an external fork
-(`cyborg-garden`) that Hermes does not control are the practical
-availability path for the strongest DOM-24 mechanism found.
+considered.
 
 ---
 

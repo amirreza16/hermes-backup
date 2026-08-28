@@ -61,20 +61,31 @@ IDs per Section 16.3's rules.
 this entry treated PAT-021 as a mechanism needing to be "enabled and
 verified" alongside PAT-020/PAT-046/PAT-047, which is backwards — PAT-021
 is destructive, and its default-off state is the one currently protecting
-Hermes' never-delete principle.]**
+Hermes' never-delete principle. A same-day second correction split
+PAT-047 out of the PAT-020/PAT-046 bullet below: PAT-047 is not shipped
+in REPO-001 at all, so "will actually enable and verify them" does not
+describe what it needs.]**
 
 The recurring, load-bearing assumption across the majority of ADAPT
-entries touching REPO-001 splits into three distinct cases, not one
+entries touching REPO-001 splits into four distinct cases, not one
 uniform posture:
-- **PAT-020 (write-approval), PAT-046/PAT-047 (tenant/profile isolation):**
-  real protective mechanisms that ship off by default and protect nothing
-  on a stock, unconfigured deployment — the assumption here is that
-  whoever configures Hermes will actually enable and verify them.
+- **PAT-020 (write-approval), PAT-046 (profile-based tenant isolation):**
+  real protective mechanisms, native to REPO-001 mainline, that ship off
+  by default and protect nothing on a stock, unconfigured deployment —
+  the assumption here is that whoever configures Hermes will actually
+  enable and verify them.
 - **PAT-021 (REJECT — auto-prune guard):** the inverse assumption applies —
   this is a real, permanent-deletion mechanism whose off-by-default state
   is what currently keeps a stock deployment compliant with the never-delete
   principle. The load-bearing assumption to guard against is the opposite
   one: that this stays off, structurally, not that it gets turned on.
+- **PAT-047 (context-scoped tenant isolation):** not the same assumption
+  as PAT-046 despite covering the same DOM-24 need — this mechanism is
+  not merged into REPO-001 mainline at all, only into an external fork,
+  behind an open upstream PR. The assumption to avoid here is treating it
+  as an existing-but-disabled REPO-001 feature; the real open question is
+  whether Phase -1 waits for the PR, depends on the fork, or reimplements
+  the fix.
 - **PAT-028/PAT-051 (cost enforcement):** neither "off" nor "on" is
   confirmed — no enforcement call site was found in either REPO-001's
   billing subsystem or REPO-041's budget-check within this phase's search
@@ -177,9 +188,12 @@ PAT-024) are the lowest-friction starting points since they require no
 adaptation beyond active defense of an existing convention. The single
 highest-leverage early adaptation candidate, per the cross-cutting risk
 named in Section 22 of the capstone report: a unified, audited
-configuration profile (or targeted fork) that enables and verifies every
-off-by-default REPO-001 safety mechanism at once, before other adaptation
-work begins.
+configuration profile that enables and verifies every off-by-default
+REPO-001 safety mechanism at once (PAT-020, PAT-046), paired with a
+separate, deliberate dependency decision for PAT-047 — wait for the
+upstream PR to merge, depend on the fork, or reimplement independently —
+since it has no REPO-001 switch to flip and a configuration pass cannot
+resolve it, before other adaptation work begins.
 
 ---
 

@@ -714,3 +714,119 @@ phase's deliverables (the four from earlier this session, plus this one),
 all traceable to the same root cause: the synthesis-layer cross-cutting-
 finding language didn't carry through the individual-record correctness
 that was already present everywhere PAT-021 was scored on its own.
+
+### 2026-08-29 — Session 8 (cont.): Third-round accuracy correction — PAT-047 conflation, exhaustive-search overclaim, repo-count error
+
+**What was inspected:**
+- A dedicated skeptical-reviewer pass was run against the same three
+  synthesis-level deliverables as the earlier corrections this session —
+  `HERMES-REUSE-STACK.md`, `phase-m2/HERMES-CAPABILITY-INTELLIGENCE-M2.md`,
+  `phase-m2/downstream-handoff.md` — deliberately given no prior context
+  (no access to this journal or `AGENT-OPERATIONS.md`) and instructed to
+  distrust confident-sounding prose and hunt specifically for (a) a
+  destructive-but-currently-safe mechanism grouped with genuinely
+  protective ones as needing the same treatment, or (b) any other blanket
+  generalization applied across a set of items that doesn't hold for
+  every member. Read-only; findings reported back, then fixed in a
+  separate, explicitly-authorized follow-up pass.
+
+**Key findings:**
+- **PAT-046/PAT-047 conflation, surviving the earlier PAT-021 fix:** the
+  same-day PAT-021 correction (previous entry) split "destructive" from
+  "protective" cleanly, but the resulting case (a) — "genuinely
+  protective, off, needs deliberate verified enabling" — still silently
+  grouped PAT-047 in with PAT-020/PAT-046 under "operator explicitly
+  configures them on." PAT-047 is not merged into REPO-001 mainline at
+  all — it exists only as an open, unmerged upstream PR (#47552) and as a
+  running fix in a third-party fork (`cyborg-garden/hermes-agent-mt`,
+  REPO-040). There is no stock-deployment switch to flip; the real choice
+  is wait for the PR to merge, depend on the fork, or reimplement
+  independently — categorically different from a config flip, and already
+  reflected correctly in PAT-047's own individual record (MEDIUM
+  adaptation, "depending on the cyborg-garden fork's ongoing maintenance,
+  or reimplementing the fix independently") the whole time. Found in the
+  same three locations the PAT-021 correction touched (reuse-stack.md's
+  Skeptic Pass item 1, the capstone's Executive Summary and Section 22,
+  downstream-handoff.md Section 4), plus a fourth the PAT-021 pass didn't
+  touch (downstream-handoff.md Section 10's "configuration profile (or
+  targeted fork)" phrasing, which still described PAT-047 as an
+  off-by-default REPO-001 mechanism).
+- **"Exhaustively-searched" overclaim:** the capstone's Executive Summary
+  and Section 21 header labeled all three knowledge gaps (DOM-11, DOM-22,
+  DOM-25) "exhaustively-searched" as a set. This was already contradicted
+  by wording elsewhere in the same document set — `HERMES-REUSE-STACK.md`'s
+  own DOM-22 entry says "flagged as a real, not exhaustively-searched,
+  gap," and the capstone's own DOM-25 bullet, two lines below the
+  overclaim in the same section, names a specific unexamined internal
+  candidate (`hermes curator`/`hermes journey`) as "a real remaining
+  follow-up before concluding this is a true external gap." Only DOM-11 —
+  backed by a consistent no-solution finding across three separate stages
+  — actually supports the claim.
+- **Repo-count error:** "26 deep-audited repos" appeared three times
+  (`HERMES-REUSE-STACK.md`'s DOM-22 entry; capstone Sections 15 and 21),
+  every time specifically when citing DOM-22's search coverage,
+  contradicting the correct count of 25 (24 discovered + REPO-001, with
+  explicit supporting arithmetic in Section 7) stated in the capstone's
+  Executive Summary and Section 7.
+
+**Why the PAT-047 issue survived the earlier correction round:** the
+PAT-021 correction was scoped exactly to the axis the Owner's follow-up
+question had surfaced — is a given mechanism destructive or protective —
+and it re-audited every location where *that* conflation appeared,
+correctly fixing all of them (five locations, then a sixth in the
+same-session addendum). It did not re-audit the other axis buried inside
+the same "case (a)" bucket: whether every member of that bucket actually
+ships in REPO-001 at all. PAT-047 passed the destructive/protective check
+cleanly (it genuinely is protective), so nothing about the PAT-021
+correction would have touched it — it fails a different, unasked
+question. This is the same root cause named in the PAT-021 entry above —
+a compression error at the synthesis layer — recurring in a new spot:
+fixing one specific misstatement in a cross-cutting summary doesn't
+automatically re-verify that summary's surrounding generalization against
+every *other* way it could be wrong. The exhaustive-search overclaim and
+the repo-count error are unrelated to PAT-021 entirely and were never in
+scope for either earlier correction pass — they live in different
+sections (Knowledge Gaps; Social-Media-Specific Findings) that neither
+prior pass had reason to touch. All three were caught this time only
+because this pass was deliberately scoped to hunt for *any* set-level
+overgeneralization, not the one specific issue already on record —
+methodologically closer to Section 13's per-pattern adversarial review,
+just applied to the synthesis layer for the first time, which is exactly
+where every round of this error has occurred so far.
+
+**Fixes applied:**
+- All three deliverables' PAT-046/PAT-047 split into a four-way (was
+  three-way) breakdown, applied consistently: PAT-047 now has its own
+  case/bullet describing the real three-way choice (wait for merge /
+  depend on the fork / reimplement independently), not "turn it on."
+  `HERMES-REUSE-STACK.md` Skeptic Pass item 1 (new case (d), "Taken
+  individually"/"Taken together" summary sentences updated); capstone
+  Executive Summary and Section 22 Risks (case renumbered to four,
+  now-redundant trailing PAT-047 mention in Section 22 folded into the
+  new case (3)); downstream-handoff.md Section 4 (new PAT-047 bullet) and
+  Section 10 (dependency decision named explicitly instead of "or
+  targeted fork").
+- Capstone Section 21 header and DOM-22/DOM-25 bullets reworded: states
+  plainly that only DOM-11 was exhaustively searched, and names each
+  remaining gap's specific unattempted follow-up (DOM-22: a dedicated
+  platform-analytics-ingestion discovery pass; DOM-25: inspecting the
+  `hermes curator`/`hermes journey` CLI commands).
+- All three "26 deep-audited repos" occurrences corrected to 25.
+- All edits marked inline with "[Corrected 2026-08-29 — see
+  `HERMES_RESEARCH.md`]" per the established convention, pointing back to
+  this entry.
+
+**Next step:**
+No further action required — all three requested fixes applied across
+all three files, cross-referenced to this entry. Phase -2 remains
+M2-CONDITIONALLY-COMPLETE; none of today's corrections change the exit
+status or any individual pattern's classification, only the accuracy of
+cross-cutting synthesis prose. Worth flagging to the Owner as a pattern
+rather than three unrelated slips: this is the third same-day round of
+synthesis-layer language drifting away from individually-correct records
+underneath it. A possible standing-rule candidate for `AGENT-OPERATIONS.md`
+— not adopted here, since it wasn't asked for and isn't this entry's
+call to make — is that any cross-cutting paragraph summarizing >=3 items
+gets its own explicit per-member re-check before being treated as final,
+separate from adversarial review of the individual records it draws
+from.

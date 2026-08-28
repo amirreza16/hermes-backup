@@ -398,7 +398,7 @@ for every STRONG CANDIDATE during Stage -2.5.
 
 - **DOM-22 (analytics & experimentation feedback loops) — no candidate**
   - Missing evidence: Zero inspectable implementation anywhere in this
-    research's 26 deep-audited repos or 32 skill records. PAT-045 is the
+    research's 25 deep-audited repos or 32 skill records. PAT-045 is the
     closest comparison (skill-usage analytics, not content-performance
     analytics).
   - Required follow-up: A dedicated discovery pass scoped specifically to
@@ -426,17 +426,20 @@ STRONG CANDIDATE patterns during Stage -2.5, this pass asks: does the
 own review would surface?
 
 1. **Cumulative "REPO-001's defaults can't be trusted at face value"
-   exposure — three distinct cases, not one uniform pattern.** [Corrected
-   2026-08-29 — see `HERMES_RESEARCH.md` for the dated correction entry;
-   the version of this item before correction incorrectly lumped all five
-   findings below into one "needs to be turned on" bucket, which
-   misstated PAT-021.]
+   exposure — four distinct cases, not one uniform pattern.** [Corrected
+   2026-08-29 — see `HERMES_RESEARCH.md` for the dated correction entries;
+   an earlier pass incorrectly lumped all five findings below into one
+   "needs to be turned on" bucket, which misstated PAT-021. A same-day
+   second pass found that fix still lumped PAT-047 in with PAT-020/
+   PAT-046 under "just needs enabling" — PAT-047 is not merged into
+   REPO-001 at all, so it now has its own case (d), split out of the
+   version of (a) that briefly held all three.]
    - **(a) Genuinely protective, off, needs deliberate verified enabling:**
-     PAT-020 (write-approval) and PAT-046/PAT-047 (tenant/profile
-     isolation) are real protective mechanisms that do nothing unless an
-     operator explicitly configures them on. These are the ones Phase -1
-     should plan to turn on, deliberately and verified, not assume are
-     already working.
+     PAT-020 (write-approval) and PAT-046 (profile-based tenant
+     isolation) are real protective mechanisms, native to REPO-001
+     mainline, that do nothing unless an operator explicitly configures
+     them on. These are the ones Phase -1 should plan to turn on,
+     deliberately and verified, not assume are already working.
    - **(b) Destructive, off, must be LOCKED off — not turned on with (a):**
      PAT-021 (auto-prune) is the opposite case. It is a real, permanent
      deletion mechanism, and its being off by default is the *correct,
@@ -454,16 +457,28 @@ own review would surface?
      sources closed before any enable/disable claim is made: REPO-001's
      `docs/billing-lifecycle.md` (named, never read) and a full sweep of
      REPO-041's dashboard/`components/` code (not completed this phase).
-   Taken individually, (a) is a LIGHT-to-MEDIUM adaptation, (b) is a
-   REJECT requiring a structural guardrail rather than any adaptation
-   level, and (c) is UNKNOWN pending the two reads above. Taken together,
-   they mean Hermes cannot trust REPO-001's defaults uncritically for any
-   of its three named behavioral principles (irreversible-action
-   confirmation, cost control, never-delete) — but the corrective action
-   is different for each: enable-and-verify for (a), lock-off for (b),
-   investigate-before-acting for (c). This is the single highest-leverage
+   - **(d) Not shipped at all — a dependency choice, not a config flip:**
+     PAT-047 (context-scoped memory isolation) looks like it belongs in
+     (a) — same DOM-24 need, same "tenant isolation" label — but it is
+     not merged into REPO-001 mainline at all. It exists only as an open,
+     unmerged upstream PR (#47552) and as a running fix in a third-party
+     fork (`cyborg-garden/hermes-agent-mt`, REPO-040). There is no
+     operator-facing switch to flip on a stock REPO-001 deployment. The
+     real choice is three-way: wait for the PR to merge, take a
+     dependency on the fork's ongoing maintenance, or reimplement the fix
+     independently.
+   Taken individually, (a) is a LIGHT adaptation, (b) is a REJECT
+   requiring a structural guardrail rather than any adaptation level, (c)
+   is UNKNOWN pending the two reads above, and (d) is a MEDIUM adaptation
+   gated on an external dependency decision, not a configuration change.
+   Taken together, they mean Hermes cannot trust REPO-001's defaults
+   uncritically for any of its three named behavioral principles
+   (irreversible-action confirmation, cost control, never-delete) — but
+   the corrective action is different for each: enable-and-verify for
+   (a), lock-off for (b), investigate-before-acting for (c), and
+   choose-a-dependency-path for (d). This is the single highest-leverage
    finding for Phase -1 to act on early, before any other adaptation
-   work — provided it is acted on with these three distinct corrective
+   work — provided it is acted on with these four distinct corrective
    actions, not one uniform "turn it all on."
 2. **AGPL exposure clusters, not just PAT-035.** Both of PAT-035's source
    repos (postiz-app, brightbean-studio) are AGPL-3.0; PAT-014's source
