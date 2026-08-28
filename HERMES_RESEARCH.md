@@ -417,3 +417,94 @@ Extraction).
 **Next step (as of 2026-08-25, superseded by Session 8):**
 Stage -2.5 needed to be redone from scratch under the new write-before-return
 rule. Not attempted again until Session 8 below.
+
+### 2026-08-28 — Session 8: Stage -2.5 redone; Stage -2.4(b) dedup catch-up
+
+**What was inspected:**
+- Owner directed a full autonomous continuation: redo Stage -2.5 from the 26
+  audit files under the write-before-return rule, backfill the Session 7
+  journal gap (done above), and proceed through subsequent stages on my own
+  judgment, reporting progress rather than waiting for a go-ahead at each
+  step.
+- Re-executed Stage -2.5 per Section 8/9.4: six parallel forks, one per
+  Stage -2.3/-2.4 cluster (A-F), each scoped to its cluster's audit files
+  plus relevant skill-catalog records, each bound by the mandatory
+  write-before-return rule (AGENT-OPERATIONS.md Active Rule 1) — write to a
+  scratch file before returning, return only a short chat confirmation. All
+  six wrote successfully this time; verified by reading each scratch file
+  directly rather than trusting the chat summaries.
+- Merged all six clusters' raw records into the canonical
+  `phase-m2/pattern-catalog.md`, assigning final sequential `PAT-001`
+  through `PAT-051` IDs (cluster order A-F), fixing internal
+  "Alternative Patterns" cross-references to the new IDs, and reconciling
+  each cluster's "Cross-Cluster Notes" against what the target cluster
+  actually extracted.
+- Also closed a process gap found while reviewing Section 11.1: the
+  mandatory dedup pass after Stage -2.4 completion (trigger b) was never
+  run — `deduplication-map.md` still only reflected the Stage -2.2
+  skill-level pass. Ran it now, at repo level, using the just-finished
+  pattern catalog as supporting evidence.
+
+**Key findings:**
+- `phase-m2/pattern-catalog.md` created: 51 pattern records (21 STRONG
+  CANDIDATE, 21 CANDIDATE, 5 CONTEXT-DEPENDENT, 1 AVOID, 3 INSUFFICIENT
+  EVIDENCE — the 3 INSUFFICIENT EVIDENCE records are deliberate
+  gap-documentation, not weak candidates forced to fill a slot). All 21
+  STRONG CANDIDATE records carry completed Adversarial Review (Section 13)
+  and three-role Role Notes (Section 14) with disagreements preserved, not
+  averaged away. Every record has Failure Modes and Human-Control
+  Implications populated. Gate G5 self-check included in the file.
+- 23 of 24 active domains (all except BLOCKED DOM-23) have >=1 pattern
+  record. 3 of those 23 (DOM-11, DOM-22, DOM-25) have only
+  gap-documentation, no positive candidate — carried forward explicitly per
+  Section P2/P5, not silently dropped. DOM-11 in particular is now backed
+  by two independent code-verified negative examples (REPO-001's
+  `maybe_auto_prune_and_vacuum`, cronicle's lumberjack log rotation) naming
+  the exact failure mode the domain guards against, sharper than Stage
+  -2.2/-2.3's identical "no solution found" finding.
+- Best cross-cutting finding this stage: DOM-02's research question ("does
+  hermes-agent enforce or merely suggest a structured-output contract?") now
+  has a direct, confirmed answer — no, REPO-001 has no such mechanism
+  (PAT-003's "Observed In" list conspicuously excludes it) — while three
+  independently-built comparison frameworks (pydantic-ai, adk-python,
+  openai-agents-python) converge on the same well-evidenced solution. A
+  second recurring cross-cutting theme, now confirmed independently in three
+  separate places (PAT-020/write-approval, PAT-021/auto-prune, PAT-046/
+  profile-routing, PAT-048/Swarm Map's own structural answer to the same
+  problem): hermes-agent repeatedly ships the *mechanism* for a safety/
+  isolation property Hermes needs, but defaults it off — meaning Hermes
+  cannot rely on defaults alone and needs an enforced configuration profile
+  or a fork.
+- The six forks' own "Cross-Cluster Notes" were reconciled during merge: 11
+  flags were confirmed resolved by the target cluster's actual extraction
+  (documented in pattern-catalog.md's Cross-Cluster Reconciliation table); 6
+  remain genuinely unresolved open items, logged explicitly rather than
+  assumed closed (e.g. agentward's pre-deployment dependency scanner never
+  independently verified against DOM-17; wind-comic's Director-agent role
+  never read in full against DOM-01; a three-way orchestration-granularity
+  comparison — PAT-001 vs. PAT-034 vs. PAT-042 — that no single cluster's
+  evidence is positioned to resolve).
+- `phase-m2/deduplication-map.md` extended with 4 new repo-level clusters
+  (Clusters 6-9), closing the Section 11.1 trigger-(b) gap: general-purpose
+  agent-orchestration SDKs (langgraph/openai-agents-python/pydantic-ai/
+  adk-python — all four kept as independent comparison-baseline sources, no
+  canonical needed, since none is an adoption candidate against the already-
+  fixed REPO-001 base architecture); narrative/multi-modal content-generation
+  pipelines (ViMax canonical, wind-comic and GOAT-Storytelling-Agent as
+  secondary references); social-media publish-mechanics platforms
+  (postiz-app and brightbean-studio kept co-primary — offsetting evidence
+  strengths, not a forced single pick); human-control/governance-policy
+  frameworks (agent-governance-toolkit/humanlayer/agentward, again no
+  canonical since none is adoptable as-is). One considered-but-rejected
+  cluster (digital-marketing-pro vs. ALwrity) logged for transparency rather
+  than silently dropped.
+- No escalations triggered. No new open questions logged as ESCALATIONS —
+  the 6 unresolved cross-cluster flags were logged as Stage -2.6/-2.7
+  follow-ups inside `pattern-catalog.md` itself, consistent with how Stage
+  -2.4's own genuine UNKNOWNs were handled.
+
+**Next step:**
+Stage -2.5 exit criteria met (Gate G5 self-check complete in
+`pattern-catalog.md`). Per the Owner's standing instruction to continue
+autonomously and report progress rather than pause for a go-ahead,
+proceeding directly to Stage -2.6 (Capability Matrix).
