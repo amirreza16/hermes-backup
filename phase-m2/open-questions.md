@@ -7,7 +7,13 @@ formal escalations (Section 5.3) — currently none.
 
 ## Open Questions
 
-### OQ-01 — Is community/audience-engagement automation in scope?
+(none currently open — OQ-01 resolved 2026-08-29, see Resolved Questions below)
+
+---
+
+## Resolved Questions
+
+### OQ-01 — Is community/audience-engagement automation in scope? — RESOLVED
 **Raised:** 2026-08-23, during Stage -2.1 domain formation.
 **Question:** `source/raw-hermes-idea.md` frames Hermes' overall goal as managing
 multiple social pages "تا حد ممکن مستقل" (as autonomously as possible), which could
@@ -20,9 +26,17 @@ limited to the two named agent types?
 (Community management / audience engagement automation) should be researched
 (IN-PROGRESS), dropped, or held at low priority. Left BLOCKED rather than guessed
 either way, per Section 5.1 ("do not infer missing requirements as facts").
-**Status:** BLOCKED — raised at the Stage -2.1 Owner Checkpoint, awaiting explicit
-Owner response.
-**Resolution:** (pending)
+**Status:** BLOCKED from 2026-08-23 (raised at the Stage -2.1 Owner Checkpoint) until
+2026-08-29 (resolved).
+**Resolution (2026-08-29):** Owner confirmed DOM-23 (community/audience-engagement
+automation — replying to comments or DMs) is **explicitly out of scope** for Hermes.
+No comment-or-DM-reply functionality exists in the current system design; this was
+never part of the intended scope. `phase-m2/research-domains.md` DOM-23 status
+changed from BLOCKED to EXCLUDED accordingly (Revision 3, 2026-08-29) — a deliberate,
+resolved scope boundary for Phase -1, not an unresolved gap. This does not change
+Phase -2's exit status determination's underlying rationale beyond removing OQ-01 as
+a blocking item; see `phase-m2/downstream-handoff.md` Section 8 for the updated
+open-questions breakdown. Full record: `HERMES_RESEARCH.md`, 2026-08-29 entry.
 
 ---
 

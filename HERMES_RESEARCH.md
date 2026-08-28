@@ -640,3 +640,77 @@ record's classification (PAT-021 was already correctly scored REJECT
 everywhere except the four cross-cutting summary passages just fixed).
 Still awaiting Owner direction on OQ-01 and the three documented gaps
 before Phase -1 begins.
+
+### 2026-08-29 — Session 8 (cont.): OQ-01 resolved — DOM-23 excluded
+
+**What was inspected:**
+- The Owner resolved OQ-01 directly: DOM-23 (community/audience-engagement
+  automation — replying to comments or DMs) is explicitly out of scope for
+  Hermes. No comment-or-DM-reply functionality exists in the current
+  system design; this was never part of the intended scope.
+- Updated the three files the Owner named — `phase-m2/open-questions.md`,
+  `phase-m2/research-domains.md`, `phase-m2/downstream-handoff.md` — to
+  record this as a deliberate, resolved scope boundary, not an unresolved
+  gap, per the Owner's explicit instruction on the distinction.
+
+**Key findings:**
+- `phase-m2/open-questions.md`: OQ-01 moved from "Open Questions" to a new
+  "Resolved Questions" section, full resolution text recorded, dated
+  2026-08-29.
+- `phase-m2/research-domains.md`: bumped to Revision 3. DOM-23's registry-
+  table status changed BLOCKED -> EXCLUDED; its full domain definition
+  block rewritten to state the resolution plainly (Research Question now
+  N/A/moot, Priority N/A, no further discovery work warranted); added a
+  Revision 3 reconciliation log entry per Section 7.3's change-control
+  requirement (date, justification, affected record, source of change).
+- `phase-m2/downstream-handoff.md`: three updates. (1) Exit Gate
+  Determination section rewritten — OQ-01 no longer cited as a reason for
+  CONDITIONALLY-COMPLETE; the sole remaining reason is now DOM-11/22/25's
+  documented gaps. Exit status itself is unchanged (still
+  M2-CONDITIONALLY-COMPLETE — those three gaps are real, non-blocking
+  unknowns independent of OQ-01). (2) X7's verification text updated to
+  say OQ-01 is RESOLVED as an exclusion, not merely "preserved, not
+  dropped." (3) Section 8 (Open Questions) — the "Blocking" category now
+  reads "none remain," with OQ-01's resolution stated directly.
+- **Flagging, not fixing, a related but distinct issue noticed while
+  editing:** `downstream-handoff.md` Section 9 (Hermes Implications)
+  contains "Hermes' fixed base architecture ships real mechanisms for all
+  three of its named behavioral principles, but none is safe to trust as a
+  default" — this was not one of the four locations covered by today's
+  earlier PAT-021 correction (that pass covered the reuse-stack synthesis
+  item, the capstone's Executive Summary and Section 22, and this same
+  file's Section 4). This sentence has the same shape of imprecision
+  applied to "principles" rather than "mechanisms": the never-delete
+  principle's own mechanism (the auto-prune guard) being off by default is
+  *currently* what's trustworthy about that principle specifically, so
+  "none is safe to trust as a default" overstates it for that one case.
+  Left unchanged pending explicit direction, consistent with not expanding
+  today's requested scope unprompted.
+
+**Next step:**
+No further action required on the OQ-01 resolution — all three requested
+files updated and cross-referenced to this entry. Phase -2 remains at
+M2-CONDITIONALLY-COMPLETE, now solely on the strength of the DOM-11/22/25
+documented gaps. The Section 9 imprecision noted above is reported to the
+Owner for a decision, not acted on unilaterally.
+
+**Addendum (same session, moments later): Section 9 imprecision fixed.**
+The Owner confirmed the flagged `downstream-handoff.md` Section 9 sentence
+should be corrected on the same three-case logic as the earlier PAT-021
+fix. Rewrote the sentence: it no longer applies one uniform "not safe to
+trust as a default" framing across all three behavioral principles.
+Irreversible-action confirmation and cost control keep the original
+implication (shipped mechanisms are off by default, genuinely need
+enabling and verifying). Never-delete is now stated correctly as the
+inverse: its shipped mechanism (auto-prune) being off *is* the currently-
+trustworthy, protective default, and the early Phase -1 action for that
+one is confirming it stays locked off, not enabling it — explicitly
+naming the risk that treating all three as equally untrustworthy could
+lead to enabling auto-prune, which is the one case where that would be
+wrong. Tagged inline with the same "[Corrected 2026-08-29 — see
+`HERMES_RESEARCH.md`]" convention used at the four earlier locations.
+This is the fifth location total carrying this correction across the
+phase's deliverables (the four from earlier this session, plus this one),
+all traceable to the same root cause: the synthesis-layer cross-cutting-
+finding language didn't carry through the individual-record correctness
+that was already present everywhere PAT-021 was scored on its own.

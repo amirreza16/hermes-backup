@@ -1,14 +1,25 @@
 # Hermes Phase -2 Research Domains
 
-Revision: 2 | Updated: 2026-08-23 | Stage: -2.1 (Research Scope Formation)
+Revision: 3 | Updated: 2026-08-29 | Stage: -2.7 (Synthesis, post-phase-end)
+
+**Revision 3 note (2026-08-29):** OQ-01 is resolved. The Owner confirmed
+DOM-23 (community management / audience engagement automation) is
+**explicitly out of scope** for Hermes: no comment-or-DM-reply
+functionality exists in the current system design, and this was never
+part of the intended scope. DOM-23's status changes from BLOCKED
+(open question, scope undetermined) to **EXCLUDED** (deliberate scope
+boundary, Owner-confirmed) — see the updated DOM-23 entry below and the
+Revision 3 reconciliation log row. This is a scope-clarifying resolution,
+not new research; no discovery work was performed or is warranted for
+this domain. Full correction record: `HERMES_RESEARCH.md`,
+2026-08-29 entry.
 
 **Revision 2 note:** at the Stage -2.1 Owner Checkpoint, the Owner confirmed the
 overall registry and the two contested drops (Spec-driven development, Architecture
 documentation), and disclosed a fact this revision incorporates: Hermes will be built
 on top of the open-source framework `NousResearch/hermes-agent`, as a final Owner
 decision made outside Phase -2. See `## Known Base Architecture` below and the
-Seed Reconciliation Log for how this changes the registry. DOM-23 (Community
-management) remains BLOCKED per Owner instruction, pending a separate answer.
+Seed Reconciliation Log for how this changes the registry.
 
 Priority scale used throughout (not prescribed by the Master Plan; defined here for
 consistency): **HIGH** = directly named or clearly implied by the raw idea's two core
@@ -51,7 +62,7 @@ active source of truth (Section 7.3).
 | DOM-20 | E — Social-Media Operations | Multi-modal content generation (text/image/video, narrative continuity) | HIGH | IN-PROGRESS |
 | DOM-21 | E — Social-Media Operations | Publishing workflow operations | HIGH | IN-PROGRESS |
 | DOM-22 | E — Social-Media Operations | Analytics & experimentation feedback loops | MEDIUM | IN-PROGRESS |
-| DOM-23 | E — Social-Media Operations | Community management / audience engagement automation | LOW | BLOCKED |
+| DOM-23 | E — Social-Media Operations | Community management / audience engagement automation | N/A | EXCLUDED (2026-08-29, Owner-confirmed out of scope) |
 | DOM-24 | F — Scaling & Self-Maintenance | Multi-tenant / multi-instance onboarding patterns | HIGH | IN-PROGRESS |
 | DOM-25 | F — Scaling & Self-Maintenance | Self-updating ecosystem-intelligence agent design | HIGH | IN-PROGRESS |
 
@@ -823,27 +834,40 @@ back into an automated decision.
 mechanism. Evidence source: raw idea, 2026-08-23.
 
 ### DOM-23 — Community management / audience engagement automation
-**Research Question:** (Scope not yet confirmed — see Open Questions below.) If in
-scope: how do agent systems handle audience engagement (replies, comments, DMs)
+**Status: EXCLUDED (2026-08-29) — resolved out of scope by explicit Owner
+confirmation. Not researched; no discovery work performed or warranted.**
+
+**Research Question:** N/A — moot. The question this domain would have asked
+(how do agent systems handle audience engagement — replies, comments, DMs —
 autonomously while respecting the same ambiguity/irreversibility/no-delete
-principles as the two named agent types?
-**Why Hermes May Need It:** UNCONFIRMED. The raw idea frames Hermes' goal broadly as
-"مدیریت تا حد ممکن مستقل چند صفحه‌ی سوشال" (managing multiple social pages as
-autonomously as possible), which *could* include audience engagement — but the raw
-idea then names exactly two agent types (content-generation, research) and neither is
-described as handling replies/comments/DMs. Per Section 5.1, this ambiguity must not
-be silently resolved either way.
-**Evidence Needed:** N/A until scope is confirmed.
-**Likely Source Types:** N/A until scope is confirmed.
-**Search Strategy:** N/A until scope is confirmed.
-**Exclusion Criteria:** N/A until scope is confirmed.
-**Priority:** LOW
-**Status:** BLOCKED
-**Rationale for Inclusion/Change:** Kept from seed list "Community management" but
-marked BLOCKED rather than silently dropped or silently included, since the raw idea
-neither names nor excludes it. Logged as an open question (see
-`phase-m2/open-questions.md`) for Owner resolution at the Stage -2.1 checkpoint.
-Evidence source: raw idea, 2026-08-23 — ambiguous.
+principles as the two named agent types) is no longer applicable, since
+Hermes will not perform this function at all.
+**Why Hermes May Need It:** It does not. Owner-confirmed 2026-08-29: no
+comment-or-DM-reply functionality exists in the current system design, and
+audience engagement was never part of the intended scope — the raw idea's
+broad framing ("managing multiple social pages as autonomously as
+possible") that originally made this ambiguous does not extend to
+engagement automation. This closes OQ-01 (`phase-m2/open-questions.md`)
+with a definitive answer, not a guess either direction.
+**Evidence Needed:** N/A — scope resolved, no further evidence required.
+**Likely Source Types:** N/A.
+**Search Strategy:** N/A. No Stage -2.2/-2.3/-2.4/-2.5 discovery work was
+performed for this domain at any point, and none is warranted going
+forward — this is a deliberate scope boundary, not a gap to fill.
+**Exclusion Criteria:** N/A — the domain itself is the exclusion.
+**Priority:** N/A (excluded domains are not prioritized)
+**Rationale for Inclusion/Change:** Originally kept from the seed list as
+"Community management" but marked BLOCKED (2026-08-23) rather than
+silently dropped or included, since the raw idea neither named nor
+excluded it — logged as OQ-01 for Owner resolution at the Stage -2.1
+checkpoint. Resolved 2026-08-29: Owner explicitly confirmed this
+capability area is out of scope. Status changes from BLOCKED (open
+question) to EXCLUDED (deliberate, resolved scope boundary) — this
+distinction matters for Phase -1: BLOCKED would have meant "still to be
+decided," EXCLUDED means "decided, do not build this." Full correction
+record: `HERMES_RESEARCH.md`, 2026-08-29 entry. Evidence source: raw idea,
+2026-08-23 (originally ambiguous); Owner direct confirmation, 2026-08-29
+(resolving).
 
 ### DOM-24 — Multi-tenant / multi-instance onboarding patterns
 **Research Question:** Does `hermes-agent` (REPO-001) support running multiple
@@ -980,3 +1004,9 @@ plausibly touch framework internals too, but the Owner named a specific six and 
 revision did not want to guess a broader boundary unprompted. Per the `## Known Base
 Architecture` section above, any of these found during Stage -2.4 audit to be
 governed by `hermes-agent` will be reframed at that point on the same basis.
+
+### Revision 3 (2026-08-29) — OQ-01 resolved, post-phase-end
+
+| Date | Change | Affected | Source of Change | Justification |
+|------|--------|----------|-------------------|----------------|
+| 2026-08-29 | RESOLVED — status change BLOCKED -> EXCLUDED | DOM-23 (Community management / audience engagement automation) | Owner direct confirmation | Owner explicitly confirmed DOM-23 is out of scope: no comment-or-DM-reply functionality exists in the current system design, and this was never part of the intended scope. Closes OQ-01 (`phase-m2/open-questions.md`) with a definitive answer. This is a scope resolution, not a research finding — no discovery work was performed for this domain at any stage, and none is warranted now that it is excluded. Full record: `HERMES_RESEARCH.md`, 2026-08-29 entry. |

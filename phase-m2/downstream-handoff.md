@@ -1,27 +1,32 @@
 # Phase -2 Downstream Handoff
 Exit Status: M2-CONDITIONALLY-COMPLETE
-Date: 2026-08-29
+Date: 2026-08-29 (updated 2026-08-29 — OQ-01 resolved post-phase-end; see
+`HERMES_RESEARCH.md` 2026-08-29 entry for the dated correction record)
 
 ## Exit Gate Determination (Master Plan Section 18)
 
-All of X1-X7 hold (verified below); X8-X10 also hold cleanly. Status is
-CONDITIONALLY-COMPLETE rather than COMPLETE specifically because material
-unknowns remain that do not block Phase -1's fit/adaptation analysis from
-starting: DOM-23 stays BLOCKED on an unresolved Owner scope question
-(OQ-01), and DOM-11/DOM-22/DOM-25 have no positive candidate, only
-documented gaps. Per Section 18.2's decision rule, this combination —
-X1-X7 holding, real but non-blocking unknowns remaining — is exactly what
-CONDITIONALLY-COMPLETE is for.
+All of X1-X7 hold (verified below); X8-X10 also hold cleanly. Status
+remains CONDITIONALLY-COMPLETE rather than COMPLETE, but the reason has
+narrowed since this file was first written: OQ-01 (DOM-23's scope) is now
+**resolved** — the Owner confirmed DOM-23 is explicitly out of scope, not
+merely left undecided — so it no longer contributes to the
+CONDITIONALLY-COMPLETE determination. The remaining reason is unchanged:
+DOM-11, DOM-22, and DOM-25 have no positive candidate, only documented
+gaps, which are real material unknowns that do not block Phase -1's
+fit/adaptation analysis from starting on everything else. Per Section
+18.2's decision rule, X1-X7 holding with real-but-non-blocking unknowns
+remaining is exactly what CONDITIONALLY-COMPLETE is for — it is simply a
+narrower set of unknowns now than at initial phase-end.
 
 | # | Condition | Status | Verification |
 |---|---|---|---|
-| X1 | Coverage | HOLDS | 24/24 active domains have >=1 candidate or a documented reason none was found (`capability-matrix.md`) |
+| X1 | Coverage | HOLDS | 24/24 active domains have >=1 candidate or a documented reason none was found (`capability-matrix.md`); DOM-23 is a 25th, deliberately excluded domain, not counted against this condition |
 | X2 | Evidence | HOLDS | Every strong recommendation cites record IDs; 21/21 STRONG CANDIDATE patterns traceable to source (`pattern-catalog.md`) |
 | X3 | Deep review | HOLDS | 25 repos deep-audited via actual clone-and-read across dimensions A-J (`repo-audits/`) |
 | X4 | Deduplication | HOLDS | 9 clusters (5 skill-level, 4 repo-level) map major overlap (`deduplication-map.md`) |
 | X5 | Pattern extraction | HOLDS | 51 pattern records, not a source list (`pattern-catalog.md`) |
 | X6 | Negative review | HOLDS | Section 13/14 completed per STRONG CANDIDATE + a synthesis-level Skeptic pass across the whole reuse stack (`HERMES-REUSE-STACK.md`) |
-| X7 | Gaps documented | HOLDS | DOM-11/22/25 explicit no-candidate findings; OQ-01/DOM-23 BLOCKED status preserved, not silently dropped (`open-questions.md`) |
+| X7 | Gaps documented | HOLDS | DOM-11/22/25 explicit no-candidate findings, still open; OQ-01/DOM-23 now RESOLVED as an explicit scope exclusion, not merely preserved-as-open (`open-questions.md`) |
 | X8 | No premature architecture | HOLDS | Self-audit against Section 2.3: no architecture/framework/version chosen by this phase; REPO-001 was Owner-disclosed, not phase-selected |
 | X9 | No implementation | HOLDS | Zero Hermes source code exists (confirmed, `AGENT-OPERATIONS.md` Active Rule 4 status note) |
 | X10 | Execution boundary respected | HOLDS | No Owner-Claude operational rule (e.g. write-before-return) was promoted to an Owner-Hermes requirement |
@@ -107,10 +112,14 @@ gap-documentation records and single-source doc-only skill patterns.
 
 ## 8. Open Questions
 
-**Blocking (require Owner input before Phase -1 can fully proceed on the
-affected domain):**
-- OQ-01 / DOM-23: is community/audience-engagement automation in Hermes'
-  remit at all? Raised Stage -2.1, still open (`open-questions.md`).
+**Blocking:** none remain. OQ-01 / DOM-23 (is community/audience-engagement
+automation in Hermes' remit at all?) — raised Stage -2.1, was the only
+blocking item — is now **resolved** (2026-08-29): the Owner confirmed
+DOM-23 is explicitly out of scope, no comment-or-DM-reply functionality
+exists in the current system design, and this was never part of the
+intended scope. This is a closed, deliberate scope boundary for Phase -1,
+not an open question — see `open-questions.md` and
+`research-domains.md`'s Revision 3 for the full resolution record.
 
 **Non-blocking (Phase -1 can proceed on everything else while these
 remain open):**
@@ -134,12 +143,27 @@ remain open):**
 
 ## 9. Hermes Implications (Not Decisions)
 
+**[Corrected 2026-08-29 — see `HERMES_RESEARCH.md`; the prior version of
+this sentence applied one uniform "not safe to trust as a default"
+framing across all three behavioral principles, which misstated the
+never-delete case the same way the reuse-stack/capstone/Section-4
+passages did before their correction.]**
+
 The dominant implication, not a decision: Hermes' fixed base architecture
-ships real mechanisms for all three of its named behavioral principles, but
-none is safe to trust as a default — Phase -1's specification work should
-treat "verify and enable the safety configuration profile" as an early,
-explicit step rather than an assumed-inherited property. A second
-implication: the strongest available fix for fine-grained multi-tenant
+ships real mechanisms touching all three of its named behavioral
+principles, but the trustworthiness of each one's *default* state differs
+by case, not uniformly untrustworthy. For irreversible-action confirmation
+and cost control, the shipped mechanisms are off by default and genuinely
+not safe to trust as-is — Phase -1's specification work should treat
+"verify and enable the safety configuration profile" as an early, explicit
+step for these two, not an assumed-inherited property. For never-delete,
+the opposite is true: the shipped mechanism (the auto-prune guard) being
+off *is* currently the trustworthy, protective default for that
+principle specifically — the early step there is confirming it stays
+locked off, not enabling it. Treating all three principles' defaults as
+equally untrustworthy would risk exactly the wrong action (enabling
+auto-prune) for the one case where the default is already correct. A
+second implication: the strongest available fix for fine-grained multi-tenant
 memory isolation (PAT-047) currently depends on an external, unmerged
 upstream PR and an external org's fork — Phase -1 should weigh whether to
 wait, depend on the fork, or reimplement independently, as a real,
