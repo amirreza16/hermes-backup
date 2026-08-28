@@ -382,3 +382,38 @@ with Evidence-section doc-vs-code findings; the standing capability-reference
 deliverable is complete). Per the Owner's explicit instruction, STOP here and
 report to the Owner for approval before proceeding to Stage -2.5 (Pattern
 Extraction).
+
+### 2026-08-25 — Session 7: Stage -2.5 first attempt — failed, unrecovered (retroactive entry)
+
+**What was inspected:**
+- All 26 `phase-m2/repo-audits/` files plus `skill-catalog.md`, in six parallel
+  forks split by the Stage -2.3 cluster structure (A-F), attempting Stage -2.5
+  pattern extraction per Section 8/9.4.
+
+**Key findings:**
+- All six forks completed their extraction work and reported back a combined
+  44 pattern records in chat, but none of the six ever called `Write` — no
+  fork persisted its output to a file. The coordinator accepted the chat
+  summaries, made follow-up `SendMessage` calls asking forks to re-paste
+  content already covered (re-billing each fork's full inherited context per
+  round-trip), and eventually moved on without ever creating
+  `phase-m2/pattern-catalog.md` or any equivalent file.
+- Result: the entire 44-record catalog is unrecoverable — it exists nowhere
+  on disk. ~1.95M fresh tokens were spent producing output that was then
+  lost. Verified directly from local session transcripts under
+  `/root/.claude/projects/-root-m2-research-workspace/.../subagents/`.
+- Root cause and fix are recorded in full in `AGENT-OPERATIONS.md` (Changelog
+  entry "2026-08-25 — Write-before-return rule adopted; Stage -2.5
+  incident"), which was created *because of* this incident. That file's Active
+  Rule 1 (write-before-return) is now mandatory for all sub-agents; Active
+  Rule 5 (RTK, opt-in) and the lean-ctx/document-graph evaluations were
+  decided the same day as follow-on tooling work, unrelated to this failure.
+- **Process note (why this entry is retroactive):** this session's outcome
+  was recorded in `AGENT-OPERATIONS.md` but never logged here in the Session
+  Log at the time, breaking the "update once per session" journal rule
+  (Master Plan Section 6.1/24). Caught and backfilled 2026-08-28 during a
+  routine status check, at the Owner's request.
+
+**Next step (as of 2026-08-25, superseded by Session 8):**
+Stage -2.5 needed to be redone from scratch under the new write-before-return
+rule. Not attempted again until Session 8 below.
